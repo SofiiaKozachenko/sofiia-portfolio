@@ -8,6 +8,7 @@
   <title>Sofiia Kozachenko® — Independent Graphic Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://player.vimeo.com" />
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
@@ -30,7 +31,7 @@
     <main id="mainContent">
       <section class="hero" aria-labelledby="heroHeading">
         <div class="hero-topline mono"><span>PORTFOLIO / SOFIIA KOZACHENKO</span><span>BASED IN UKRAINE · WORKING EVERYWHERE</span></div>
-        <div class="hero-typography"><div class="hero-line hero-line-first">SOFIIA<span class="hero-dot">.</span></div><div class="hero-line hero-line-last">KOZACHENKO<span class="hero-asterisk">✳</span></div></div>
+        <div class="hero-typography" lang="en"><div class="hero-line hero-line-first">SOFIIA<span class="hero-dot">.</span></div><div class="hero-line hero-line-last">KOZACHENKO<span class="hero-asterisk">✳</span></div></div>
         <div class="hero-art" id="heroArt" aria-label="3D avatar of Sofiia">
           <div class="hero-art-shape" aria-hidden="true"></div>
           <img class="hero-avatar" id="heroAvatar" src="assets/sofiia-3d-avatar.webp" alt="Stylized 3D character portrait with mauve cap and long hair" />
@@ -44,7 +45,7 @@
         </div>
         <div class="hero-footer mono"><span>* DESIGN IS MY FAVORITE WAY TO THINK.</span><span>SCROLL TO DISCOVER ↘</span></div>
       </section>
-      <div class="marquee" aria-hidden="true"><div class="marquee-inner">VISUAL THINKING ✳ NOT SO ORDINARY ✳ EXPERIMENT & PLAY ✳ VISUAL THINKING ✳ NOT SO ORDINARY ✳ EXPERIMENT & PLAY ✳ </div></div>
+      <div class="marquee" aria-hidden="true"><div class="marquee-inner"><span class="marquee-cycle">VISUAL THINKING ✳ NOT SO ORDINARY ✳ EXPERIMENT & PLAY ✳ VISUAL THINKING ✳ NOT SO ORDINARY ✳ EXPERIMENT & PLAY ✳ VISUAL THINKING ✳ NOT SO ORDINARY ✳ EXPERIMENT & PLAY ✳ VISUAL THINKING ✳ NOT SO ORDINARY ✳ EXPERIMENT & PLAY ✳ </span><span class="marquee-cycle">VISUAL THINKING ✳ NOT SO ORDINARY ✳ EXPERIMENT & PLAY ✳ VISUAL THINKING ✳ NOT SO ORDINARY ✳ EXPERIMENT & PLAY ✳ VISUAL THINKING ✳ NOT SO ORDINARY ✳ EXPERIMENT & PLAY ✳ VISUAL THINKING ✳ NOT SO ORDINARY ✳ EXPERIMENT & PLAY ✳ </span></div></div>
       <section class="about-section section-pad" id="about" aria-labelledby="aboutHeading">
         <div class="section-eyebrow mono"><span>01 / <span data-i18n="aboutTag">THE HUMAN BEHIND THE PIXELS</span></span><span>✳ A LITTLE MORE PERSONAL</span></div>
         <div class="about-main"><div class="about-side"><span class="vertical-stamp">NICE TO MEET YOU !</span><div class="tiny-avatar"><img src="assets/sofiia-3d-avatar.webp" alt="Sofiia's 3D avatar" /></div></div><div class="about-copy"><h2 id="aboutHeading"><span data-i18n="aboutTitleOne">Not just</span> <span class="serif-mark" data-i18n="aboutTitleTwo">pretty</span><br /><span data-i18n="aboutTitleThree">pictures.</span></h2><p class="about-lead" data-i18n="aboutLead">I'm Sofiia, a graphic designer who loves turning complex ideas into bold, meaningful visual worlds.</p><p data-i18n="aboutText">I work at the intersection of visual identity, brand storytelling, digital design and experimentation. I believe the best design does more than catch the eye — it gives an idea its own voice.</p><div class="about-tags"><span>GRAPHIC DESIGN</span><span>BRAND IDENTITY</span><span>UI / UX</span><span>AI & CREATIVE TOOLS</span></div></div></div>
@@ -82,14 +83,14 @@
       </section>
       <section class="work-section section-pad" id="work" aria-labelledby="workHeading">
         <div class="section-eyebrow mono"><span>02 / <span data-i18n="selectedProjects">SELECTED PROJECTS</span></span><span>SELECTED WORK</span></div>
-        <div class="work-header"><h2 id="workHeading" data-i18n="workTitle">Selected <i>work<span class="work-asterisk">*</span></i></h2><p data-i18n="workSubtitle">A collection of things I've made, imagined and shaped.</p></div>
+        <div class="work-header"><h2 id="workHeading" data-i18n="workTitle">Selected <i>work<span class="work-asterisk">*</span></i></h2><p data-i18n="workSubtitle">A collection of things I've made, imagined and thoughtfully refined.</p></div>
         <div class="filters" id="filters" hidden role="group" aria-label="Filter projects">
           <button class="filter active" data-filter="all">ALL <span id="totalCount">(05)</span></button>
           <button class="filter" data-filter="branding">BRANDING</button>
           <button class="filter" data-filter="digital">DIGITAL</button>
           <button class="filter" data-filter="packaging">PACKAGING</button>
         </div>
-        <div class="project-grid" id="projectGrid"></div>
+        <div class="project-carousel-topline"><span class="mono">✳ EXPLORE THE COLLECTION</span><div class="project-carousel-buttons" role="group" aria-label="Project carousel controls"><button type="button" id="projectPrev" aria-label="Previous projects">←</button><span id="projectPosition" class="mono" aria-live="polite">01—02 / 05</span><button type="button" id="projectNext" aria-label="Next projects">→</button></div></div><div class="project-grid" id="projectGrid" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Projects carousel"></div>
         <div class="work-bottom-note"><span class="handwritten">and there's more to come…</span><a href="#contact" data-i18n="behanceMore">SEE MORE PROJECTS ↗</a></div>
       </section>
       <section class="contact-section section-pad" id="contact" aria-labelledby="contactHeading"><div class="section-eyebrow mono"><span>03 / <span data-i18n="contactTag">LET'S MAKE SOMETHING</span></span><span>OPEN FOR COLLABORATIONS</span></div><h2 id="contactHeading"><span data-i18n="contactTitleOne">GOT A</span> <em data-i18n="contactTitleTwo">wild</em><br /><span data-i18n="contactTitleThree">IDEA?</span> <span class="contact-spark">✳</span></h2><p data-i18n="contactText">Let's make it real. A good project usually starts with a simple hello.</p><a class="mail-button" href="mailto:s.kozachenko05@gmail.com"><span data-i18n="sayHello">SAY HELLO</span><strong>↗</strong></a><div class="footer-links"><a href="https://www.behance.net/sofiiakozachenko" target="_blank" rel="noopener noreferrer">BEHANCE ↗</a><a href="https://t.me/sofiia_kkkk" target="_blank" rel="noopener noreferrer">TELEGRAM ↗</a><a href="mailto:s.kozachenko05@gmail.com">EMAIL ↗</a></div></section>

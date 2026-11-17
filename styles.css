@@ -176,3 +176,38 @@ html[lang="uk"] {
 .project-grid{grid-template-columns:1fr}
 .work-header{margin:36px 0 24px}
 }
+
+
+/* V10: seamless text, stable Latin letter spacing, lifted avatar and a carousel */
+.hero-typography[lang="en"] .hero-line{font-kerning:none;font-feature-settings:"kern" 0;letter-spacing:-.095em!important}
+.hero-typography[lang="en"] .hero-line-last{letter-spacing:-.09em!important}
+.marquee{overflow:hidden}
+.marquee-inner{display:flex;align-items:center;width:max-content;gap:0;animation:marquee-seamless 36s linear infinite;will-change:transform;white-space:nowrap;word-spacing:normal;letter-spacing:-.04em}
+.marquee-cycle{flex:0 0 auto;display:block;white-space:nowrap;padding-right:1.5em}
+@keyframes marquee-seamless{to{transform:translate3d(-50%,0,0)}}
+@media(prefers-reduced-motion:reduce){.marquee-inner{animation:none}}
+@media(min-width:761px){.about-section .about-main .about-side .tiny-avatar{position:relative;top:-80px;bottom:auto;left:0;transform:none}}
+.about-bottom{padding-bottom:72px!important}
+.resume-head{margin-top:0!important}
+.project-carousel-topline{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px;color:var(--blue)}
+.project-carousel-topline>.mono{font-size:10px}
+.project-carousel-buttons{display:flex;align-items:center;gap:11px}
+.project-carousel-buttons button{display:grid;place-items:center;width:46px;height:46px;border:1px solid var(--blue);color:var(--blue);background:transparent;border-radius:50%;font:500 25px/1 var(--font-body);cursor:pointer;transition:background .2s,color .2s}
+.project-carousel-buttons button:hover:not(:disabled){background:var(--blue);color:white}
+.project-carousel-buttons button:disabled{opacity:.3;cursor:not-allowed}
+.project-carousel-buttons #projectPosition{min-width:115px;text-align:center;font-size:10px;font-variant-numeric:tabular-nums}
+#projectGrid{display:flex!important;gap:20px;overflow-x:auto;scroll-behavior:smooth;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch;align-items:stretch;padding-bottom:8px}
+#projectGrid::-webkit-scrollbar{display:none}
+#projectGrid .project-card:nth-child(n){grid-column:auto;flex:0 0 calc((100% - 20px)/2);scroll-snap-align:start;min-width:0}
+#projectGrid .project-cover{height:auto;aspect-ratio:1.278}
+#projectGrid .project-info{min-height:76px}
+#projectGrid:focus-visible{outline:2px solid var(--blue);outline-offset:5px}
+@media(max-width:760px){
+  .project-carousel-topline>.mono{font-size:8px}
+  .project-carousel-buttons{gap:6px}
+  .project-carousel-buttons button{width:40px;height:40px}
+  .project-carousel-buttons #projectPosition{min-width:88px;font-size:9px}
+  #projectGrid .project-card:nth-child(n){flex:0 0 100%}
+  .about-section .about-main .about-side .tiny-avatar{top:-20px;right:auto;left:0;transform:none}
+  .about-bottom{padding-bottom:52px!important}
+}

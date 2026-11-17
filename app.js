@@ -16,7 +16,7 @@
       introTag:'LET ME INTRODUCE MYSELF',heroIntro:'I make',heroAccent:'ideas',heroEnd:'look impossible to ignore.',
       heroNote:'GRAPHIC DESIGN, BRANDING<br>& A LITTLE BIT OF MAGIC.',explore:'EXPLORE',
       selectedProjects:'SELECTED PROJECTS',workTitle:'Selected <i>work<span class="work-asterisk">*</span></i>',
-      workSubtitle:"A collection of things I've made, imagined and shaped.",
+      workSubtitle:"A collection of things I've made, imagined and thoughtfully refined.",
       behanceMore:'LET’S CREATE SOMETHING ↗',aboutTag:'THE HUMAN BEHIND THE PIXELS',
       aboutTitleOne:'Not just',aboutTitleTwo:'pretty',aboutTitleThree:'pictures.',
       aboutLead:"I'm Sofiia, a graphic designer who loves turning complex ideas into bold, meaningful visual worlds.",
@@ -56,7 +56,7 @@
       introTag:'НУ ЩО, ЗНАЙОМИТИСЬ?',heroIntro:'Перетворюю',heroAccent:'ідеї',heroEnd:'на візуал, який помічають.',
       heroNote:'ГРАФІЧНИЙ ДИЗАЙН, АЙДЕНТИКА<br>І ТРІШКИ МАГІЇ.',explore:'ДИВИТИСЬ',
       selectedProjects:'ОБРАНІ ПРОЄКТИ',workTitle:'Мої <i>роботи<span class="work-asterisk">*</span></i>',
-      workSubtitle:'Колекція речей, які я придумувала, створювала та доводила до ідеалу.',
+      workSubtitle:'Колекція речей, які я придумувала, створювала та ретельно доводила до ідеалу.',
       behanceMore:'СТВОРИМО ЩОСЬ РАЗОМ ↗',aboutTag:'ЛЮДИНА ЗА ПІКСЕЛЯМИ',
       aboutTitleOne:'Не просто',aboutTitleTwo:'гарні',aboutTitleThree:'картинки.',
       aboutLead:'Я Софія, графічна дизайнерка, яка любить перетворювати складні ідеї на сміливі візуальні світи.',
@@ -123,13 +123,66 @@
       ${thumb}</div>`;
   }
 
+
+  // Native, responsive and keyboard-accessible carousel. Always display a full row.
+  function updateCarouselPosition(){
+    const grid = $('#projectGrid');
+    if(!grid) return;
+    const cards = [...grid.querySelectorAll('.project-card:not([hidden])')];
+    const counter = $('#projectPosition'), prev = $('#projectPrev'), next = $('#projectNext');
+    if(!cards.length){
+      if(counter) counter.textContent='00 / 00';
+      if(prev) prev.disabled=true;
+      if(next) next.disabled=true;
+      return;
+    }
+    const visible = matchMedia('(max-width:760px)').matches?1:2;
+    const maxStart=Math.max(0,cards.length-visible);
+    const gap=parseFloat(getComputedStyle(grid).columnGap)||0;
+    const step=cards[0].getBoundingClientRect().width+gap;
+    const position=step?Math.max(0,Math.min(maxStart,Math.round(grid.scrollLeft/step))):0;
+    grid.dataset.position=String(position);
+    if(counter)counter.textContent=String(position+1).padStart(2,'0')+'—'+String(Math.min(cards.length,position+visible)).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
+    if(prev)prev.disabled=position===0;
+    if(next)next.disabled=position===maxStart;
+  }
+  function moveCarousel(direction){
+    const grid=$('#projectGrid');
+    if(!grid)return;
+    const cards=[...grid.querySelectorAll('.project-card:not([hidden])')];
+    if(!cards.length)return;
+    const visible=matchMedia('(max-width:760px)').matches?1:2;
+    const maxStart=Math.max(0,cards.length-visible);
+    const index=Math.max(0,Math.min(maxStart,Number(grid.dataset.position||0)+direction));
+    const delta=cards[index].getBoundingClientRect().left-cards[0].getBoundingClientRect().left;
+    grid.scrollTo({left:grid.scrollLeft+delta,behavior:'smooth'});
+    grid.dataset.position=String(index);
+    const counter=$('#projectPosition');
+    if(counter)counter.textContent=String(index+1).padStart(2,'0')+'—'+String(Math.min(cards.length,index+visible)).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
+    $('#projectPrev').disabled=index===0;
+    $('#projectNext').disabled=index===maxStart;
+  }
+  let carouselScrollTick=false;
+  $('#projectGrid').addEventListener('scroll',()=>{
+    if(carouselScrollTick)return;
+    carouselScrollTick=true;
+    requestAnimationFrame(()=>{carouselScrollTick=false;updateCarouselPosition();});
+  },{passive:true});
+  window.addEventListener('resize',updateCarouselPosition,{passive:true});
+  $('#projectPrev').addEventListener('click',()=>moveCarousel(-1));
+  $('#projectNext').addEventListener('click',()=>moveCarousel(1));
+  $('#projectGrid').addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'){e.preventDefault();moveCarousel(1);}
+    if(e.key==='ArrowLeft'){e.preventDefault();moveCarousel(-1);}
+  });
+
   function renderProjects() {
     const grid = $('#projectGrid');
     if (!grid) return;
     grid.innerHTML = projects.map((p, i) => `<article class="project-card" data-category="${escapeHtml(p.category)}"><a href="?case=${encodeURIComponent(p.slug)}" class="project-open" data-slug="${escapeHtml(p.slug)}" aria-label="Open ${escapeHtml(p.title)} case study">
       ${coverHTML(p)}<div class="project-info"><div><h3>${escapeHtml(p.title)}</h3></div><span class="project-year">${String(i + 1).padStart(2, '0')}</span></div></a></article>`).join('');
-    const active = document.querySelector('.filter.active')?.dataset.filter || 'all';
-    filterProjects(active);
+    filterProjects('all');
+    updateCarouselPosition();
   }
   function filterProjects(filter) {
     document.querySelectorAll('.project-card').forEach(card => card.hidden = filter !== 'all' && card.dataset.category !== filter);
@@ -190,7 +243,32 @@
     root.hidden=false;document.body.style.overflow='hidden';root.scrollTop=0;
     document.title=`${p.title} — Sofiia Kozachenko`;
     $('#mainShell').setAttribute('aria-hidden','true');
-    // Responsive images use native lazy loading. The gallery no longer has an iframe.
+    // Responsive images use native lazy loading.
+    // Initiate the Vimeo player as it enters the visible part of the case study.
+    // A muted user-visible embed is far more reliable than offscreen autoplay.
+    root.querySelectorAll('.case-video iframe').forEach(frame=>{
+      const source=frame.dataset.src||frame.getAttribute('src');
+      if(!source)return;
+      frame.removeAttribute('src');
+      const start=()=>{
+        let url;
+        try{url=new URL(source,location.href);}catch{return;}
+        if(url.hostname!=='player.vimeo.com')return;
+        url.searchParams.set('autoplay','1');
+        url.searchParams.set('muted','1');
+        url.searchParams.set('autopause','0');
+        url.searchParams.set('loop','1');
+        frame.src=url.toString();
+      };
+      if('IntersectionObserver' in window){
+        const observer=new IntersectionObserver(entries=>{
+          if(entries.some(entry=>entry.isIntersecting)){observer.disconnect();start();}
+        },{root,rootMargin:'180px 0px',threshold:.01});
+        activeCaseObserver=observer;
+        observer.observe(frame.closest('.case-video'));
+      }else start();
+    });
+
 
   }
 

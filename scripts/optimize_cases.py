@@ -61,7 +61,7 @@ def clean_embed(url: str) -> str | None:
         return None
     args = dict(urllib.parse.parse_qsl(parsed.query, keep_blank_values=False))
     allowed = {'h': args['h']} if re.fullmatch(r'[0-9a-fA-F]{6,32}', args.get('h', '')) else {}
-    allowed.update({'autoplay':'1','loop':'1','muted':'1','controls':'1','playsinline':'1','title':'0','byline':'0','portrait':'0'})
+    allowed.update({'autoplay':'1','loop':'1','muted':'1','autopause':'0','controls':'1','playsinline':'1','title':'0','byline':'0','portrait':'0'})
     return urllib.parse.urlunsplit(('https','player.vimeo.com',parsed.path,urllib.parse.urlencode(allowed),''))
 
 
@@ -126,8 +126,8 @@ def optimize_project(slug: str, page: Path, rendered_index: dict) -> dict:
                 has_video = True
                 blocks.append(
                     '<div class="case-video">'
-                    f'<iframe title="{html.escape(slug)} — video" src="{html.escape(url,quote=True)}" '
-                    'loading="lazy" referrerpolicy="strict-origin-when-cross-origin" '
+                    f'<iframe title="{html.escape(slug)} — video" data-src="{html.escape(url,quote=True)}" '
+                    'loading="eager" referrerpolicy="strict-origin-when-cross-origin" '
                     'allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen></iframe>'
                     '</div>'
                 )
