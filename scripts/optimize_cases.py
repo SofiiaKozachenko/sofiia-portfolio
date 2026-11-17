@@ -61,7 +61,7 @@ def clean_embed(url: str) -> str | None:
         return None
     args = dict(urllib.parse.parse_qsl(parsed.query, keep_blank_values=False))
     allowed = {'h': args['h']} if re.fullmatch(r'[0-9a-fA-F]{6,32}', args.get('h', '')) else {}
-    allowed.update({'autoplay':'0','loop':'1','muted':'0','controls':'1','playsinline':'1','title':'0','byline':'0','portrait':'0'})
+    allowed.update({'autoplay':'1','loop':'1','muted':'1','controls':'1','playsinline':'1','title':'0','byline':'0','portrait':'0'})
     return urllib.parse.urlunsplit(('https','player.vimeo.com',parsed.path,urllib.parse.urlencode(allowed),''))
 
 
