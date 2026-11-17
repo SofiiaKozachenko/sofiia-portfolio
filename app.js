@@ -136,7 +136,7 @@
       if(next) next.disabled=true;
       return;
     }
-    const visible = matchMedia('(max-width:760px)').matches?1:2;
+    const visible=1;
     const maxStart=Math.max(0,cards.length-visible);
     const gap=parseFloat(getComputedStyle(grid).columnGap)||0;
     const step=cards[0].getBoundingClientRect().width+gap;
@@ -151,11 +151,12 @@
     if(!grid)return;
     const cards=[...grid.querySelectorAll('.project-card:not([hidden])')];
     if(!cards.length)return;
-    const visible=matchMedia('(max-width:760px)').matches?1:2;
+    const visible=1;
     const maxStart=Math.max(0,cards.length-visible);
     const index=Math.max(0,Math.min(maxStart,Number(grid.dataset.position||0)+direction));
-    const delta=cards[index].getBoundingClientRect().left-cards[0].getBoundingClientRect().left;
-    grid.scrollTo({left:grid.scrollLeft+delta,behavior:'smooth'});
+    const target=cards[index].getBoundingClientRect().left;
+    const gridLeft=grid.getBoundingClientRect().left;
+    grid.scrollTo({left:grid.scrollLeft+target-gridLeft,behavior:'smooth'});
     grid.dataset.position=String(index);
     const counter=$('#projectPosition');
     if(counter)counter.textContent=String(index+1).padStart(2,'0')+'—'+String(Math.min(cards.length,index+visible)).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
@@ -191,6 +192,41 @@
       btn.setAttribute('aria-pressed', String(btn.dataset.filter === filter));
     });
   }
+
+  // Scroll the horizontal gallery with a mouse as well as touch, arrows, keyboard.
+  const dragGrid=$('#projectGrid');
+  let dragState=null;
+  let suppressProjectClick=false;
+  dragGrid.addEventListener('pointerdown',e=>{
+    if(e.pointerType!=='mouse'||e.button!==0)return;
+    dragState={x:e.clientX,left:dragGrid.scrollLeft,moved:false};
+    dragGrid.style.scrollSnapType='none';
+    dragGrid.style.scrollBehavior='auto';
+    dragGrid.setPointerCapture(e.pointerId);
+  });
+  dragGrid.addEventListener('pointermove',e=>{
+    if(!dragState)return;
+    const delta=e.clientX-dragState.x;
+    if(Math.abs(delta)>7)dragState.moved=true;
+    if(dragState.moved)dragGrid.scrollLeft=dragState.left-delta;
+  });
+  function stopGalleryDrag(){
+    if(!dragState)return;
+    const wasMoved=dragState.moved;
+    dragState=null;
+    dragGrid.style.scrollSnapType='';
+    dragGrid.style.scrollBehavior='';
+    if(wasMoved){
+      suppressProjectClick=true;
+      setTimeout(()=>{suppressProjectClick=false;},50);
+    }
+  }
+  dragGrid.addEventListener('pointerup',stopGalleryDrag);
+  dragGrid.addEventListener('pointercancel',stopGalleryDrag);
+  dragGrid.addEventListener('click',e=>{
+    if(suppressProjectClick){e.preventDefault();e.stopImmediatePropagation();suppressProjectClick=false;}
+  },true);
+
   let returnScroll = 0;
   let activeCaseObserver=null;
   function renderCase(slug, updateHistory = true) {
