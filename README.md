@@ -50,6 +50,7 @@ python3.12 -m venv .venv
 
 - `.github/workflows/publish.yml` — автоматична синхронізація та публікація через GitHub Pages.
 - `scripts/build_site.py` — синхронізація, перевірка якості й доступності сторінок.
+- `scripts/stage_site.py` — створює чисту продакшен-збірку `dist/` без вихідних Python-скриптів.
 - `scripts/import_behance.py` — завантажує презентації із Behance, зберігаючи кожен модуль.
 - `content/sources.json` — джерела початкових і майбутніх кейсів.
 - `content/behance-imports.js` — створюється під час збірки з реальними локальними шляхами.
@@ -59,3 +60,17 @@ python3.12 -m venv .venv
 ## Поточний стан
 
 **Цей ZIP містить робочий код автоматичної збірки, а не вже опубліковані галереї.** У поточному середовищі немає мережевого доступу до Behance CDN, тому я не можу чесно назвати наповненим онлайн-сайтом до першого запуску синхронізації в GitHub Actions. Не відкривай `index.html` локально як остаточну перевірку кейсів: відкривай опубліковану збірку після успішної синхронізації.
+
+
+## Performance and video (V8)
+
+The deployment now generates 960px / 1920px / 2880px responsive WebP images (quality 92)
+from original Behance gallery files, retaining the original full-resolution PNGs for
+click-to-zoom. Gallery images are loaded lazily in a native page layout (no giant iframe),
+while the first image loads immediately. Extra descriptions and project subtitles are not
+added to the case itself. Bean Road's original Vimeo player URL, including the unlisted
+video hash, is embedded responsively with native Vimeo playback controls. Playback depends
+on Vimeo connectivity and the video owner's external embedding settings.
+
+The workflow prepares these variants automatically after fetching Behance content. If a
+required image or Bean Road video reference is absent, publishing is blocked.

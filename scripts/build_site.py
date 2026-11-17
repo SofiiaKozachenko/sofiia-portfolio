@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse,json,os,re,sys,urllib.request,urllib.parse
 from pathlib import Path
 from import_behance import ROOT, KNOWN, import_one, read_json
+from optimize_cases import build as build_optimized_cases
 
 SOURCE_CONFIG=ROOT/'content'/'sources.json'
 
@@ -58,8 +59,12 @@ def validate(strict=True):
     projects=source_projects()
     manifest=read_json(ROOT/'content'/'behance-imports.json',{})
     problems=[]
+    optimized_js=ROOT/'content'/'case-pages.js'
+    native_text=optimized_js.read_text(encoding='utf-8') if optimized_js.exists() else ''
     for p in projects:
         slug=p['slug'];item=manifest.get(slug,{})
+        if not (native_text and f'"{slug}"' in native_text):problems.append(f'{slug}: missing optimized gallery')
+        if slug=='bean-road' and 'player.vimeo.com/video/1090989010' not in native_text:problems.append('Bean Road: missing original Vimeo player')
         if not item:problems.append(f'{slug}: missing imported record');continue
         page=ROOT/item.get('page','')
         if not page.is_file() or page.stat().st_size<1000:problems.append(f'{slug}: missing actual case HTML');continue
@@ -103,6 +108,7 @@ def main():
             print('Optional new-project discovery unavailable:',exc,file=sys.stderr)
     if failures:
         raise SystemExit('Sync incomplete; preserving previous published website.\n'+'\n'.join(failures))
+    build_optimized_cases()
     validate(strict=True)
 
 if __name__=='__main__':main()

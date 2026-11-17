@@ -127,7 +127,7 @@
     const grid = $('#projectGrid');
     if (!grid) return;
     grid.innerHTML = projects.map((p, i) => `<article class="project-card" data-category="${escapeHtml(p.category)}"><a href="?case=${encodeURIComponent(p.slug)}" class="project-open" data-slug="${escapeHtml(p.slug)}" aria-label="Open ${escapeHtml(p.title)} case study">
-      ${coverHTML(p)}<div class="project-info"><div><h3>${escapeHtml(p.title)}</h3><span class="project-subtitle">${escapeHtml(p.subtitle)}</span></div><span class="project-year">${String(i + 1).padStart(2, '0')} / ${escapeHtml(p.year)}</span></div></a></article>`).join('');
+      ${coverHTML(p)}<div class="project-info"><div><h3>${escapeHtml(p.title)}</h3></div><span class="project-year">${String(i + 1).padStart(2, '0')} / ${escapeHtml(p.year)}</span></div></a></article>`).join('');
     const active = document.querySelector('.filter.active')?.dataset.filter || 'all';
     filterProjects(active);
   }
@@ -163,8 +163,11 @@
     const uploaded=Array.isArray(p.presentationImages)?p.presentationImages.filter(x=>x?.url):[];
     const caseTitle=escapeHtml(p.title);
     let original='';
-    if(exported?.page) {
-      original=`<iframe id="behanceCaseFrame" class="case-embedded-html" src="${escapeHtml(exported.page)}" title="${caseTitle} — original Behance presentation" loading="eager" sandbox="allow-same-origin"></iframe>`;
+    if(prepared?.html) {
+      // Native HTML avoids one oversized iframe viewport (which eagerly loaded all media).
+      // All visible case blocks retain their original Behance sequence and proportions.
+      const bg=/^#[0-9a-fA-F]{3,8}$/.test(prepared.background||'') ? prepared.background : '#ffffff';
+      original=`<section class="case-native-gallery" style="--native-bg:${bg}">${prepared.html}</section>`;
     } else if(prepared?.tiles?.length) {
       original=prepared.tiles.map((f,i)=>`<figure class="original-case-image"><img src="${escapeHtml(f.local)}" alt="${caseTitle} / ${i+1}" loading="${i===0?'eager':'lazy'}" decoding="async"></figure>`).join('');
     } else if(uploaded.length) {
@@ -180,36 +183,15 @@
     const root=$('#caseView');
     root.innerHTML=`<div class="case-page original-case-page">
       <header class="case-topbar"><a class="brand" href="${location.pathname||'./'}" data-action="back">SK<span class="brand-spark">✳</span></a><span class="case-topbar-label mono">${caseTitle} / ${labels.source}</span><div class="case-topbar-buttons"><button class="case-lang" data-action="case-language">${localized?'EN':'UA'} ↗</button><button class="case-back" data-action="back">← ${labels.back}</button></div></header>
-      <main class="original-case-main"><div class="original-case-strip mono"><span>✳ ${escapeHtml(p.title.toUpperCase())}</span><span>${labels.source}</span></div>${original}</main>
+      <main class="original-case-main">${original}</main>
       <button class="next-project" data-next="${escapeHtml(next.slug)}"><div><span class="mono">${labels.next} / ${String((idx+1)%projects.length+1).padStart(2,'0')}</span><h2>${escapeHtml(next.title)}</h2></div><span class="next-arrow">↗</span></button>
       <footer class="case-footer"><span>© SOFIIA KOZACHENKO 2026</span><button data-action="back">← ${labels.back}</button><span>DESIGNED WITH CURIOSITY ✳</span></footer>
     </div>`;
     root.hidden=false;document.body.style.overflow='hidden';root.scrollTop=0;
     document.title=`${p.title} — Sofiia Kozachenko`;
     $('#mainShell').setAttribute('aria-hidden','true');
-    const frame=$('#behanceCaseFrame');
-    if(frame){
-      frame.addEventListener('error',()=>{
-        frame.replaceWith(document.createTextNode(lang==='ua'?'Не вдалося завантажити локальну презентацію.':'Could not load the stored case presentation.'));
-      },{once:true});
-      frame.addEventListener('load',()=>{
-        try {
-          const doc=frame.contentDocument;
-          if(!doc)return;
-          const resize=()=>{
-            // The imported page and the portfolio share the same origin.
-            const height=Math.max(doc.body?.scrollHeight||0,doc.documentElement?.scrollHeight||0);
-            if(height>300)frame.style.height=height+'px';
-          };
-          resize();
-          if(typeof ResizeObserver!=='undefined'){
-            activeCaseObserver=new ResizeObserver(resize);
-            if(doc.body) activeCaseObserver.observe(doc.body);
-          }
-          for(const image of doc.images)image.addEventListener('load',resize,{once:true});
-        }catch(error){console.warn('Case will scroll inside its own frame',error);}
-      },{once:true});
-    }
+    // Responsive images use native lazy loading. The gallery no longer has an iframe.
+
   }
 
   function closeCase(updateHistory = true) {
@@ -233,6 +215,25 @@
     if(trigger) {e.preventDefault();renderCase(trigger.dataset.slug);return;}
     const caseLang = e.target.closest('[data-action="case-language"]');
     if (caseLang) {lang=lang==='en'?'ua':'en';safeStorage.setItem('sk_portfolio_lang',lang);applyLanguage();return;}
+    const zoom = e.target.closest('a[data-zoom]');
+    if(zoom) {
+      e.preventDefault();
+      const caseRoot=$('#caseView');
+      if(!caseRoot || caseRoot.hidden) return;
+      const overlay=document.createElement('div');
+      overlay.className='portfolio-image-lightbox';
+      overlay.setAttribute('role','dialog');
+      overlay.setAttribute('aria-label',lang==='ua'?'Оригінал зображення':'Full-resolution image');
+      overlay.innerHTML=`<button type="button" aria-label="Close image">×</button><img alt="" loading="eager" decoding="async">`;
+      overlay.querySelector('img').src=zoom.getAttribute('href');
+      caseRoot.append(overlay);
+      overlay.querySelector('button').focus();
+      return;
+    }
+    const lightbox=e.target.closest('.portfolio-image-lightbox');
+    if(lightbox && (e.target===lightbox || e.target.closest('button'))) {
+      e.preventDefault();lightbox.remove();return;
+    }
     const back = e.target.closest('[data-action="back"]');
     if(back){e.preventDefault();closeCase();return;}
     const next = e.target.closest('[data-next]');
@@ -246,7 +247,7 @@
     applyLanguage();
   });
   $('#backToTop').addEventListener('click',() => window.scrollTo({top:0,behavior:'smooth'}));
-  document.addEventListener('keydown',e => {if(e.key === 'Escape')closeCase();});
+  document.addEventListener('keydown',e => {if(e.key === 'Escape'){const z=document.querySelector('.portfolio-image-lightbox');if(z){z.remove();e.preventDefault();return;}closeCase();}});
   window.addEventListener('popstate',syncFromURL);
   let ticking = false;
   function onScroll(){if(ticking)return;ticking=true;requestAnimationFrame(()=>{

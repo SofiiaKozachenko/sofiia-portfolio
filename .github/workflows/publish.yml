@@ -31,7 +31,7 @@ jobs:
           cache-dependency-path: requirements-sync.txt
       - name: Install importer
         run: python -m pip install -r requirements-sync.txt
-      - name: Download and verify all original Behance presentations
+      - name: Download originals, create high-quality responsive gallery assets, and verify
         run: python scripts/build_site.py --discover
       - name: Verify deploy is nonempty and offline-capable
         run: python scripts/build_site.py --check-only
