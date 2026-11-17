@@ -1,0 +1,10 @@
+# Auto-imported originals are generated during publishing, not stored in Git.
+/assets/behance/
+/assets/covers/
+/content/behance-imports.json
+/content/custom-projects.json
+/dist/
+/.venv/
+__pycache__/
+*.pyc
+.DS_Store
