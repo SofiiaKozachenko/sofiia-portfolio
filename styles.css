@@ -42,9 +42,9 @@ html[lang="uk"] {
   --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
   --font-hand: 'Caveat', 'Manrope', cursive;
 }
-html[lang="uk"] .hero-line{letter-spacing:-.07em}
-html[lang="uk"] .hero-lower h1,html[lang="uk"] .work-header h2,html[lang="uk"] .about-copy h2 {letter-spacing:-.065em}
-html[lang="uk"] .contact-section h2 {letter-spacing:-.07em}
+
+
+
 /* The original, unmodified Figma frame is rendered inside a proportional viewer. */
 .original-case-page{background:var(--paper)}
 .original-case-page .case-topbar{position:sticky;top:0;z-index:22;background:var(--paper)}
@@ -143,3 +143,36 @@ html[lang="uk"] .contact-section h2 {letter-spacing:-.07em}
 .portfolio-image-lightbox img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;cursor:default}
 .portfolio-image-lightbox button{position:absolute;top:14px;right:20px;border:1px solid #fff8;border-radius:50%;width:44px;height:44px;background:#13132c;color:white;font-size:32px;line-height:1;cursor:pointer}
 @media(max-width:760px){.case-native-gallery .case-original-text{font-size:16px}.case-native-gallery .case-video{max-width:100%}}
+
+
+/* V9: balanced about composition, one gallery without category subdivisions, full-width video */
+.about-main{grid-template-columns:minmax(210px,290px) minmax(0,1fr);gap:clamp(36px,5vw,85px);align-items:start;padding:78px 0 90px}
+.about-side{min-height:0;display:flex;flex-direction:column;gap:20px;align-items:flex-start;padding-top:14px}
+.vertical-stamp{position:static;writing-mode:horizontal-tb;transform:none;letter-spacing:.14em;font-size:10px}
+.tiny-avatar{position:relative;left:auto;bottom:auto;width:clamp(195px,20vw,290px);height:clamp(230px,24vw,330px);border-radius:44%;transform:none}
+.tiny-avatar img{transform:none;height:112%}
+.about-copy h2{font-size:clamp(50px,6.7vw,103px);line-height:.94}
+.about-lead{margin-top:32px!important}
+.about-bottom{padding-top:44px;padding-bottom:12px}
+.resume-head{margin-top:12px}
+#filters{display:none!important}
+.work-header{display:block;max-width:760px;margin:24px 0 30px}
+.work-header p{width:auto;max-width:680px;margin-top:24px}
+.project-card:nth-child(n){grid-column:span 1}
+.project-grid{grid-template-columns:1fr 1fr;gap:42px 18px}
+.project-info .project-year{margin-top:9px;min-width:40px;text-align:right}
+.case-native-gallery{max-width:100%}
+.case-native-gallery .case-video{width:100%;max-width:none;margin:0;aspect-ratio:16/9}
+.case-native-gallery .case-video iframe{width:100%;height:100%}
+@media(max-width:1100px){.about-main{grid-template-columns:minmax(185px,240px) minmax(0,1fr);gap:32px}}
+@media(max-width:760px){
+.about-main{grid-template-columns:1fr;gap:26px;padding:44px 0 60px}
+.about-side{order:2;min-height:180px;align-items:flex-end;padding-top:0}
+.about-copy{order:1}
+.vertical-stamp{display:none}
+.tiny-avatar{width:155px;height:170px;right:0;top:auto}
+.about-copy h2{font-size:11.3vw}
+.about-bottom{padding-top:34px}
+.project-grid{grid-template-columns:1fr}
+.work-header{margin:36px 0 24px}
+}
