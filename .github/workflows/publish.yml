@@ -1,0 +1,56 @@
+name: Publish original Behance case studies
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Every morning. A failure leaves the previous successful website online.
+    - cron: '20 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: requirements-sync.txt
+      - name: Install importer
+        run: python -m pip install -r requirements-sync.txt
+      - name: Download and verify all original Behance presentations
+        run: python scripts/build_site.py --discover
+      - name: Verify deploy is nonempty and offline-capable
+        run: python scripts/build_site.py --check-only
+      - name: Prepare static production folder
+        run: python scripts/stage_site.py
+      - name: Prepare GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload complete static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
