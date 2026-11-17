@@ -129,49 +129,54 @@
 
   // Native, responsive and keyboard-accessible carousel. Always display a full row.
   function carouselCards(){
-    const grid = $('#projectGrid');
-    return grid ? [...grid.querySelectorAll('.project-card:not([hidden])')] : [];
+    const grid=$('#projectGrid');
+    return grid?[...grid.querySelectorAll('.project-card:not([hidden])')]:[];
   }
-  function carouselStep(cards) {
-    if(cards.length<2) return cards[0]?.getBoundingClientRect().width||1;
-    const step=cards[1].offsetLeft-cards[0].offsetLeft;
-    return step>0?step:cards[0].getBoundingClientRect().width+(parseFloat(getComputedStyle($('#projectGrid')).gap)||0);
+  function carouselVisibleCount(){
+    return window.matchMedia('(max-width:760px)').matches?1:2;
   }
-  function carouselIndex(grid,cards) {
-    if(!cards.length) return 0;
-    const step=carouselStep(cards);
-    return Math.max(0,Math.min(Math.max(0,cards.length-(window.matchMedia('(max-width:760px)').matches?1:2)),Math.round(grid.scrollLeft/step)));
+  function carouselMaxStart(cards){
+    return Math.max(0,cards.length-carouselVisibleCount());
+  }
+  function carouselOffset(cards,index){
+    if(!cards.length)return 0;
+    return cards[Math.max(0,Math.min(index,cards.length-1))].offsetLeft-cards[0].offsetLeft;
+  }
+  function carouselIndex(grid,cards){
+    const max=carouselMaxStart(cards);
+    let closest=0,smallest=Infinity;
+    for(let index=0;index<=max;index++){
+      const distance=Math.abs(grid.scrollLeft-carouselOffset(cards,index));
+      if(distance<smallest){smallest=distance;closest=index;}
+    }
+    return closest;
+  }
+  function carouselCounter(index,count){
+    const twoDigits=n=>String(n).padStart(2,'0');
+    if(carouselVisibleCount()===1)return twoDigits(index+1)+'/'+twoDigits(count);
+    return twoDigits(index+1)+'-'+twoDigits(Math.min(count,index+2))+'/'+twoDigits(count);
+  }
+  function setCarouselControls(index,count){
+    const counter=$('#projectPosition'),prev=$('#projectPrev'),next=$('#projectNext');
+    if(counter)counter.textContent=count?carouselCounter(index,count):'00/00';
+    if(prev)prev.disabled=index<=0;
+    if(next)next.disabled=!count||index>=Math.max(0,count-carouselVisibleCount());
   }
   function updateCarouselPosition(){
-    const grid=$('#projectGrid'), cards=carouselCards();
-    const prev=$('#projectPrev'),next=$('#projectNext'),counter=$('#projectPosition');
-    if(!grid||!cards.length){
-      if(counter)counter.textContent='00 / 00';
-      if(prev)prev.disabled=true;
-      if(next)next.disabled=true;
-      return;
-    }
-    const index=carouselIndex(grid,cards);
-    grid.dataset.position=String(index);
-    
-    if(counter)counter.textContent=String(index+1).padStart(2,'0')+'/'+String(cards.length).padStart(2,'0');
-    if(prev)prev.disabled=index<=0;
-    if(next)next.disabled=index>=Math.max(0,cards.length-(window.matchMedia('(max-width:760px)').matches?1:2));
+    const grid=$('#projectGrid'),cards=carouselCards();
+    if(!grid||!cards.length){setCarouselControls(0,0);return;}
+    const position=carouselIndex(grid,cards);
+    grid.dataset.position=String(position);
+    setCarouselControls(position,cards.length);
   }
   function moveCarousel(direction){
     const grid=$('#projectGrid'),cards=carouselCards();
     if(!grid||!cards.length)return;
     const current=carouselIndex(grid,cards);
-    const maxStart=Math.max(0,cards.length-(window.matchMedia('(max-width:760px)').matches?1:2));
-    const target=Math.max(0,Math.min(maxStart,current+direction));
-    const desired=target*carouselStep(cards);
+    const target=Math.max(0,Math.min(carouselMaxStart(cards),current+direction));
     grid.dataset.position=String(target);
-    grid.scrollTo({left:desired,behavior:'smooth'});
-    // Update controls immediately, including after a rapid reverse click.
-    const counter=$('#projectPosition');
-    if(counter)counter.textContent=String(target+1).padStart(2,'0')+'/'+String(cards.length).padStart(2,'0');
-    $('#projectPrev').disabled=target===0;
-    $('#projectNext').disabled=target===maxStart;
+    setCarouselControls(target,cards.length);
+    grid.scrollTo({left:carouselOffset(cards,target),behavior:'smooth'});
   }
   let carouselScrollTick=false;
   $('#projectGrid').addEventListener('scroll',()=>{
@@ -179,15 +184,26 @@
     carouselScrollTick=true;
     requestAnimationFrame(()=>{carouselScrollTick=false;updateCarouselPosition();});
   },{passive:true});
-  window.addEventListener('resize',()=>{requestAnimationFrame(updateCarouselPosition);},{passive:true});
+  let oldCarouselVisible=carouselVisibleCount();
+  window.addEventListener('resize',()=>{
+    const visible=carouselVisibleCount();
+    const grid=$('#projectGrid'),cards=carouselCards();
+    if(!grid||!cards.length)return;
+    if(visible!==oldCarouselVisible){
+      oldCarouselVisible=visible;
+      const target=Math.min(Number(grid.dataset.position||0),carouselMaxStart(cards));
+      grid.scrollTo({left:carouselOffset(cards,target),behavior:'instant'});
+    }
+    requestAnimationFrame(updateCarouselPosition);
+  },{passive:true});
   $('#projectPrev').addEventListener('click',()=>moveCarousel(-1));
   $('#projectNext').addEventListener('click',()=>moveCarousel(1));
-  $('#projectGrid').addEventListener('keydown',e=>{
-    if(e.key==='ArrowRight'){e.preventDefault();moveCarousel(1);}
-    if(e.key==='ArrowLeft'){e.preventDefault();moveCarousel(-1);}
+  $('#projectGrid').addEventListener('keydown',event=>{
+    if(event.key==='ArrowRight'){event.preventDefault();moveCarousel(1);}
+    if(event.key==='ArrowLeft'){event.preventDefault();moveCarousel(-1);}
   });
 
-    function renderProjects() {
+  function renderProjects() {
     const grid = $('#projectGrid');
     if (!grid) return;
     grid.innerHTML = projects.map((p, i) => `<article class="project-card" data-category="${escapeHtml(p.category)}"><a href="?case=${encodeURIComponent(p.slug)}" class="project-open" data-slug="${escapeHtml(p.slug)}" aria-label="Open ${escapeHtml(p.title)} case study">

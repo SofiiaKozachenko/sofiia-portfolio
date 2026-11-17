@@ -425,3 +425,58 @@ html[lang="uk"] {
   }
   .project-carousel-buttons #projectPosition{letter-spacing:0!important;white-space:nowrap!important}
 }
+
+
+/* V16: two full project cards and range counter on desktop;
+   one full card + next-card peek and single index on mobile. */
+#projectGrid{
+  display:flex!important;
+  gap:18px!important;
+  overflow-x:auto!important;
+  scroll-snap-type:x mandatory!important;
+  scroll-padding-left:0!important;
+}
+#projectGrid .project-card:nth-child(n){
+  flex:0 0 calc((100% - 18px)/2)!important;
+  width:calc((100% - 18px)/2)!important;
+  min-width:0!important;
+  max-width:none!important;
+  scroll-snap-align:start!important;
+}
+#projectGrid::after{content:none!important;display:none!important}
+.project-carousel-buttons #projectPosition{
+  flex:0 0 100px!important;
+  width:100px!important;
+  min-width:100px!important;
+  max-width:100px!important;
+  white-space:nowrap!important;
+  letter-spacing:0!important;
+}
+@media(max-width:760px){
+  #projectGrid{
+    gap:12px!important;
+    padding-right:0!important;
+    scroll-snap-type:x mandatory!important;
+  }
+  #projectGrid .project-card:nth-child(n){
+    flex:0 0 86%!important;
+    width:86%!important;
+    min-width:86%!important;
+    max-width:86%!important;
+  }
+  #projectGrid::after{
+    content:""!important;
+    display:block!important;
+    flex:0 0 calc(14% - 12px)!important;
+    min-width:0!important;
+    height:1px;
+    pointer-events:none;
+  }
+  .project-carousel-buttons #projectPosition{
+    flex:0 0 52px!important;
+    width:52px!important;
+    min-width:52px!important;
+    max-width:52px!important;
+    font-size:10px!important;
+  }
+}
