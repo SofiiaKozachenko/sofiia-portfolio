@@ -257,3 +257,48 @@ html[lang="uk"] {
 #projectGrid .project-card:nth-child(n){flex:0 0 85%!important;max-width:85%!important}
 #projectGrid::after{flex-basis:15%}
 }
+
+/* V12 fixes: clean typography, 2-up carousel, vector stars and cover fill */
+.vector-star{width:1em;height:1em;display:inline-block;vertical-align:-.09em;flex:none;overflow:visible}
+.brand-spark{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;font-size:22px;line-height:1;top:0}
+.brand-spark .vector-star{width:100%;height:100%}
+.hero-asterisk{display:inline-flex;align-items:flex-start;width:.43em;height:.5em;font-size:.43em;vertical-align:top;transform:rotate(8deg)}
+.hero-asterisk .vector-star{width:100%;height:100%}
+.contact-spark .vector-star{width:.8em;height:.8em}
+.resume-spark .vector-star{width:.85em;height:.85em}
+.inline-symbol{display:inline-flex;align-items:center;gap:7px}
+.inline-symbol .vector-star{height:1em;width:1em;color:inherit}
+.nav-arrow-icon{width:13px;height:13px;vertical-align:middle}
+.contact-section h2{margin-bottom:clamp(75px,8vw,140px)!important}
+.contact-section>p{position:relative;z-index:2;margin-top:0!important}
+.work-header{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(280px,29%)!important;gap:clamp(46px,5vw,100px)!important;align-items:end!important;width:100%;max-width:none!important;margin:30px 0 40px!important}
+.work-header h2{grid-column:1;min-width:0;max-width:100%;margin:0!important;line-height:1!important}
+.work-header p{grid-column:2;align-self:end;justify-self:end;max-width:360px!important;width:100%!important;margin:0 0 14px!important;font-size:clamp(12px,1vw,15px)!important;line-height:1.7!important}
+#projectGrid{gap:18px!important;scroll-padding-inline:0!important;overflow-x:auto;scroll-snap-type:x mandatory}
+#projectGrid::after{display:none!important;content:none!important}
+#projectGrid .project-card:nth-child(n){flex:0 0 calc((100% - 18px)/2)!important;max-width:none!important;min-width:0}
+#projectGrid .project-cover{overflow:hidden;border:0!important;background:transparent!important;aspect-ratio:1.278}
+#projectGrid .project-cover img.project-image{object-fit:cover!important;object-position:center!important;display:block;width:100%;height:100%;inset:0;position:absolute;filter:none!important;transform:scale(1.008);transition:transform .35s ease}
+#projectGrid .project-card:hover img.project-image{transform:scale(1.045)!important}
+#projectGrid .project-info h3{overflow-wrap:anywhere}
+@media(max-width:1100px) and (min-width:761px){
+  .work-header{grid-template-columns:minmax(0,1fr) minmax(220px,32%)!important;gap:30px!important}
+  .work-header h2{font-size:clamp(75px,9vw,125px)!important}
+}
+@media(max-width:760px){
+  .contact-section h2{margin-bottom:clamp(42px,9vw,70px)!important}
+  .contact-section>p{margin:0 0 30px!important;max-width:min(290px,80%)!important}
+  .work-header{display:block!important;margin:36px 0 32px!important}
+  .work-header h2{font-size:clamp(52px,14vw,88px)!important;line-height:1!important;margin:0!important}
+  .work-header p{margin:30px 0 0!important;max-width:none!important;width:100%!important;font-size:clamp(12px,3.3vw,15px)!important}
+  .project-carousel-topline{gap:7px!important;margin-bottom:14px}
+  .project-carousel-topline>.mono{font-size:8px!important;max-width:120px}
+  .project-carousel-buttons{gap:5px!important}
+  .project-carousel-buttons button{width:35px!important;height:35px!important;font-size:18px!important}
+  .project-carousel-buttons #projectPosition{min-width:75px!important;font-size:8px!important}
+  #projectGrid{gap:10px!important}
+  #projectGrid .project-card:nth-child(n){flex:0 0 calc((100% - 10px)/2)!important;max-width:none!important}
+  #projectGrid .project-info{min-height:52px!important;padding-top:8px;margin-top:8px}
+  #projectGrid .project-info h3{font-size:clamp(12px,3.55vw,20px)!important;letter-spacing:-.06em!important;line-height:1.2}
+  #projectGrid .project-info .project-year{font-size:8px!important}
+}

@@ -26,7 +26,7 @@
       contactText:"Let's make it real. A good project usually starts with a simple hello.",sayHello:'SAY HELLO',
       projectIndex:'PROJECT',caseAbout:'The idea behind it.',viewBehance:'EXPLORE FULL CASE ON BEHANCE',nextProject:'NEXT PROJECT',back:'← BACK TO PORTFOLIO',
       journeyNumber:"MY JOURNEY / EXPERIENCE",
-      journeyTitle:"Experience<span class=\"resume-spark\">✳</span>",
+      journeyTitle:"Experience<span class=\"resume-spark\"><svg class="vector-star" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" aria-hidden="true"><path d="M12 1.6v20.8M1.6 12h20.8M4.7 4.7l14.6 14.6M19.3 4.7L4.7 19.3"/></svg></span>",
       journeyIntro:"I have worked with a design studio, a retail marketing team, an advertising agency and a coffee shop. Each setting shaped how I approach visual communication.",
       experienceHeading:"WORK EXPERIENCE",
       roleAxioma:"Graphic designer and SMM designer at Axioma design studio.",
@@ -66,7 +66,7 @@
       contactText:'Давай втілимо її в життя. Класний проєкт часто починається з простого «привіт».',sayHello:'НАПИСАТИ',
       projectIndex:'ПРОЄКТ',caseAbout:'Ідея за проєктом.',viewBehance:'ПЕРЕГЛЯНУТИ КЕЙС НА BEHANCE',nextProject:'НАСТУПНИЙ ПРОЄКТ',back:'← НАЗАД ДО ПОРТФОЛІО',
       journeyNumber:"МІЙ ШЛЯХ / ДОСВІД",
-      journeyTitle:"Досвід<span class=\"resume-spark\">✳</span>",
+      journeyTitle:"Досвід<span class=\"resume-spark\"><svg class="vector-star" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" aria-hidden="true"><path d="M12 1.6v20.8M1.6 12h20.8M4.7 4.7l14.6 14.6M19.3 4.7L4.7 19.3"/></svg></span>",
       journeyIntro:"Працювала в дизайн-студії, маркетинговій команді рітейл-мережі, рекламній агенції та кавʼярні. Різні формати роботи допомогли сформувати системний підхід до візуальної комунікації.",
       experienceHeading:"ДОСВІД РОБОТИ",
       roleAxioma:"Графічна дизайнерка та SMM у дизайн-студії Axioma.",
@@ -100,7 +100,7 @@
       const val = translations[lang][el.dataset.i18n];
       if (val) el.innerHTML = val;
     });
-    $('#languageToggle').innerHTML = lang === 'en' ? 'UA <span>↗</span>' : 'EN <span>↗</span>';
+    $('#languageToggle').innerHTML = lang === 'en' ? 'UA <svg class="nav-arrow-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18L18 6M8 6h10v10"/></svg>' : 'EN <svg class="nav-arrow-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18L18 6M8 6h10v10"/></svg>';
     const workNav=document.querySelector('.nav [data-i18n="navWork"]');
     if(workNav)workNav.innerHTML=(lang==='ua'?'ПРОЄКТИ':'WORK')+` <sup>${String(projects.length).padStart(2,'0')}</sup>`;
     document.querySelectorAll('.filter').forEach(button => {
@@ -125,43 +125,50 @@
 
 
   // Native, responsive and keyboard-accessible carousel. Always display a full row.
-  function updateCarouselPosition(){
+  function carouselCards(){
     const grid = $('#projectGrid');
-    if(!grid) return;
-    const cards = [...grid.querySelectorAll('.project-card:not([hidden])')];
-    const counter = $('#projectPosition'), prev = $('#projectPrev'), next = $('#projectNext');
-    if(!cards.length){
-      if(counter) counter.textContent='00 / 00';
-      if(prev) prev.disabled=true;
-      if(next) next.disabled=true;
+    return grid ? [...grid.querySelectorAll('.project-card:not([hidden])')] : [];
+  }
+  function carouselStep(cards) {
+    if(cards.length<2) return cards[0]?.getBoundingClientRect().width||1;
+    const step=cards[1].offsetLeft-cards[0].offsetLeft;
+    return step>0?step:cards[0].getBoundingClientRect().width+(parseFloat(getComputedStyle($('#projectGrid')).gap)||0);
+  }
+  function carouselIndex(grid,cards) {
+    if(!cards.length) return 0;
+    const step=carouselStep(cards);
+    return Math.max(0,Math.min(Math.max(0,cards.length-2),Math.round(grid.scrollLeft/step)));
+  }
+  function updateCarouselPosition(){
+    const grid=$('#projectGrid'), cards=carouselCards();
+    const prev=$('#projectPrev'),next=$('#projectNext'),counter=$('#projectPosition');
+    if(!grid||!cards.length){
+      if(counter)counter.textContent='00 / 00';
+      if(prev)prev.disabled=true;
+      if(next)next.disabled=true;
       return;
     }
-    const visible=1;
-    const maxStart=Math.max(0,cards.length-visible);
-    const gap=parseFloat(getComputedStyle(grid).columnGap)||0;
-    const step=cards[0].getBoundingClientRect().width+gap;
-    const position=step?Math.max(0,Math.min(maxStart,Math.round(grid.scrollLeft/step))):0;
-    grid.dataset.position=String(position);
-    if(counter)counter.textContent=String(position+1).padStart(2,'0')+'—'+String(Math.min(cards.length,position+visible)).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
-    if(prev)prev.disabled=position===0;
-    if(next)next.disabled=position===maxStart;
+    const index=carouselIndex(grid,cards);
+    grid.dataset.position=String(index);
+    const end=Math.min(cards.length,index+2);
+    if(counter)counter.textContent=String(index+1).padStart(2,'0')+'–'+String(end).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
+    if(prev)prev.disabled=index<=0;
+    if(next)next.disabled=index>=Math.max(0,cards.length-2);
   }
   function moveCarousel(direction){
-    const grid=$('#projectGrid');
-    if(!grid)return;
-    const cards=[...grid.querySelectorAll('.project-card:not([hidden])')];
-    if(!cards.length)return;
-    const visible=1;
-    const maxStart=Math.max(0,cards.length-visible);
-    const index=Math.max(0,Math.min(maxStart,Number(grid.dataset.position||0)+direction));
-    const target=cards[index].getBoundingClientRect().left;
-    const gridLeft=grid.getBoundingClientRect().left;
-    grid.scrollTo({left:grid.scrollLeft+target-gridLeft,behavior:'smooth'});
-    grid.dataset.position=String(index);
+    const grid=$('#projectGrid'),cards=carouselCards();
+    if(!grid||!cards.length)return;
+    const current=carouselIndex(grid,cards);
+    const maxStart=Math.max(0,cards.length-2);
+    const target=Math.max(0,Math.min(maxStart,current+direction));
+    const desired=target*carouselStep(cards);
+    grid.dataset.position=String(target);
+    grid.scrollTo({left:desired,behavior:'smooth'});
+    // Update controls immediately, including after a rapid reverse click.
     const counter=$('#projectPosition');
-    if(counter)counter.textContent=String(index+1).padStart(2,'0')+'—'+String(Math.min(cards.length,index+visible)).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
-    $('#projectPrev').disabled=index===0;
-    $('#projectNext').disabled=index===maxStart;
+    if(counter)counter.textContent=String(target+1).padStart(2,'0')+'–'+String(Math.min(cards.length,target+2)).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
+    $('#projectPrev').disabled=target===0;
+    $('#projectNext').disabled=target===maxStart;
   }
   let carouselScrollTick=false;
   $('#projectGrid').addEventListener('scroll',()=>{
@@ -169,7 +176,7 @@
     carouselScrollTick=true;
     requestAnimationFrame(()=>{carouselScrollTick=false;updateCarouselPosition();});
   },{passive:true});
-  window.addEventListener('resize',updateCarouselPosition,{passive:true});
+  window.addEventListener('resize',()=>{requestAnimationFrame(updateCarouselPosition);},{passive:true});
   $('#projectPrev').addEventListener('click',()=>moveCarousel(-1));
   $('#projectNext').addEventListener('click',()=>moveCarousel(1));
   $('#projectGrid').addEventListener('keydown',e=>{
@@ -177,7 +184,7 @@
     if(e.key==='ArrowLeft'){e.preventDefault();moveCarousel(-1);}
   });
 
-  function renderProjects() {
+    function renderProjects() {
     const grid = $('#projectGrid');
     if (!grid) return;
     grid.innerHTML = projects.map((p, i) => `<article class="project-card" data-category="${escapeHtml(p.category)}"><a href="?case=${encodeURIComponent(p.slug)}" class="project-open" data-slug="${escapeHtml(p.slug)}" aria-label="Open ${escapeHtml(p.title)} case study">
@@ -264,17 +271,17 @@
     } else {
       const cover=exported?.cover||p.image||'';
       original=`<section class="case-awaiting">
-        <div><span class="mono case-awaiting-tag">✳ ${labels.source}</span>
+        <div><span class="mono case-awaiting-tag">✳︎ ${labels.source}</span>
           <h2>${labels.awaiting}</h2><p>${labels.note}</p>
           <div class="case-awaiting-actions"><a href="${escapeHtml(p.behance||'#')}" target="_blank" rel="noopener noreferrer">${labels.sourceLink} ↗</a></div>
         </div><div class="case-awaiting-visual" style="--await-bg:${(theme[p.palette]||theme.blue)[0]};--await-fg:${(theme[p.palette]||theme.blue)[1]}"><strong>${caseTitle}</strong>${cover?`<img src="${escapeHtml(cover)}" alt="${caseTitle} — original cover" loading="eager" onerror="this.remove()" />`:''}</div></section>`;
     }
     const root=$('#caseView');
     root.innerHTML=`<div class="case-page original-case-page">
-      <header class="case-topbar"><a class="brand" href="${location.pathname||'./'}" data-action="back">SK<span class="brand-spark">✳</span></a><span class="case-topbar-label mono">${caseTitle} / ${labels.source}</span><div class="case-topbar-buttons"><button class="case-lang" data-action="case-language">${localized?'EN':'UA'} ↗</button><button class="case-back" data-action="back">← ${labels.back}</button></div></header>
+      <header class="case-topbar"><a class="brand" href="${location.pathname||'./'}" data-action="back">SK<span class="brand-spark"><svg class="vector-star" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" aria-hidden="true"><path d="M12 1.6v20.8M1.6 12h20.8M4.7 4.7l14.6 14.6M19.3 4.7L4.7 19.3"/></svg></span></a><span class="case-topbar-label mono">${caseTitle} / ${labels.source}</span><div class="case-topbar-buttons"><button class="case-lang" data-action="case-language">${localized?'EN':'UA'} ↗</button><button class="case-back" data-action="back">← ${labels.back}</button></div></header>
       <main class="original-case-main">${original}</main>
       <button class="next-project" data-next="${escapeHtml(next.slug)}"><div><span class="mono">${labels.next} / ${String((idx+1)%projects.length+1).padStart(2,'0')}</span><h2>${escapeHtml(next.title)}</h2></div><span class="next-arrow">↗</span></button>
-      <footer class="case-footer"><span>© SOFIIA KOZACHENKO</span><button data-action="back">← ${labels.back}</button><span>DESIGNED WITH CURIOSITY ✳</span></footer>
+      <footer class="case-footer"><span>© SOFIIA KOZACHENKO</span><button data-action="back">← ${labels.back}</button><span>DESIGNED WITH CURIOSITY ✳︎</span></footer>
     </div>`;
     root.hidden=false;document.body.style.overflow='hidden';root.scrollTop=0;
     document.title=`${p.title} — Sofiia Kozachenko`;
