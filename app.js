@@ -18,13 +18,13 @@
       availability:'AVAILABLE FOR PROJECTS',navWork:'WORK <sup>05</sup>',navAbout:'ABOUT',navContact:'CONTACT',
       introTag:'LET ME INTRODUCE MYSELF',heroIntro:'I make',heroAccent:'ideas',heroEnd:'look impossible to ignore.',
       heroNote:'GRAPHIC DESIGN, BRANDING<br>& A LITTLE BIT OF MAGIC.',explore:'EXPLORE',
-      selectedProjects:'SELECTED PROJECTS',workTitle:'Selected <i>work<span class="work-asterisk">*</span></i>',
+      selectedProjects:'SELECTED PROJECTS',workTitle:'Featured <i>projects<span class="work-asterisk">*</span></i>',
       workSubtitle:"A collection of things I've made, imagined and thoughtfully refined.",
       behanceMore:'LET’S CREATE SOMETHING ' + uiUpRight,aboutTag:'THE HUMAN BEHIND THE PIXELS',
       aboutTitleOne:'Not just',aboutTitleTwo:'pretty',aboutTitleThree:'pictures.',
       aboutLead:"I'm Sofiia, a graphic designer who loves turning complex ideas into bold, meaningful visual worlds.",
       aboutText:"I work at the intersection of visual identity, brand storytelling, digital design and experimentation. I believe the best design does more than catch the eye — it gives an idea its own voice.",
-      factOne:'CREATING VISUAL<br>IDENTITIES',factTwo:'COMPUTER SCIENCE<br>+ DESIGN',factThree:'CURIOUS, STRATEGIC<br>& A BIT BOLD',
+      factOne:'CREATING VISUAL<br>IDENTITIES',factTwo:'COMPUTER SCIENCE<br>+ DESIGN',factThree:'ATTENTIVENESS,<br>ORGANIZATION<br>& CURIOSITY',
       contactTag:"LET'S MAKE SOMETHING",contactTitleOne:'GOT A',contactTitleTwo:'wild',contactTitleThree:'IDEA?',
       contactText:"Let's make it real. A good project usually starts with a simple hello.",sayHello:'SAY HELLO',
       projectIndex:'PROJECT',caseAbout:'The idea behind it.',viewBehance:'EXPLORE FULL CASE ON BEHANCE',nextProject:'NEXT PROJECT',back:'BACK TO PORTFOLIO',
@@ -58,13 +58,13 @@
       availability:'ВІДКРИТА ДО ПРОЄКТІВ',navWork:'ПРОЄКТИ <sup>05</sup>',navAbout:'ПРО МЕНЕ',navContact:'КОНТАКТИ',
       introTag:'НУ ЩО, ЗНАЙОМИТИСЬ?',heroIntro:'Перетворюю',heroAccent:'ідеї',heroEnd:'на візуал, який помічають.',
       heroNote:'ГРАФІЧНИЙ ДИЗАЙН, АЙДЕНТИКА<br>І ТРІШКИ МАГІЇ.',explore:'ДИВИТИСЬ',
-      selectedProjects:'ОБРАНІ ПРОЄКТИ',workTitle:'Мої <i>роботи<span class="work-asterisk">*</span></i>',
+      selectedProjects:'ОБРАНІ ПРОЄКТИ',workTitle:'Добірка <i>проєктів<span class="work-asterisk">*</span></i>',
       workSubtitle:'Колекція речей, які я придумувала, створювала та ретельно доводила до ідеалу.',
       behanceMore:'СТВОРИМО ЩОСЬ РАЗОМ ' + uiUpRight,aboutTag:'ЛЮДИНА ЗА ПІКСЕЛЯМИ',
       aboutTitleOne:'Не просто',aboutTitleTwo:'гарні',aboutTitleThree:'картинки.',
       aboutLead:'Я Софія, графічна дизайнерка, яка любить перетворювати складні ідеї на сміливі візуальні світи.',
       aboutText:'Працюю з айдентикою, візуальними історіями брендів, цифровим дизайном та експериментами. Вірю, що хороший дизайн не лише привертає увагу, а й дає ідеї власний голос.',
-      factOne:'СТВОРЮЮ ВІЗУАЛЬНІ<br>ІДЕНТИЧНОСТІ',factTwo:'КОМПʼЮТЕРНІ НАУКИ<br>+ ДИЗАЙН',factThree:'ДОПИТЛИВА, СТРАТЕГІЧНА<br>І ТРОХИ СМІЛИВА',
+      factOne:'СТВОРЮЮ ВІЗУАЛЬНІ<br>ІДЕНТИЧНОСТІ',factTwo:'КОМПʼЮТЕРНІ НАУКИ<br>+ ДИЗАЙН',factThree:'УВАЖНІСТЬ,<br>ОРГАНІЗОВАНІСТЬ<br>ТА ДОПИТЛИВІСТЬ',
       contactTag:'СТВОРИМО ЩОСЬ РАЗОМ',contactTitleOne:'МАЄШ',contactTitleTwo:'сміливу',contactTitleThree:'ІДЕЮ?',
       contactText:'Давай втілимо її в життя. Класний проєкт часто починається з простого «привіт».',sayHello:'НАПИСАТИ',
       projectIndex:'ПРОЄКТ',caseAbout:'Ідея за проєктом.',viewBehance:'ПЕРЕГЛЯНУТИ КЕЙС НА BEHANCE',nextProject:'НАСТУПНИЙ ПРОЄКТ',back:'НАЗАД ДО ПОРТФОЛІО',
@@ -140,7 +140,7 @@
   function carouselIndex(grid,cards) {
     if(!cards.length) return 0;
     const step=carouselStep(cards);
-    return Math.max(0,Math.min(Math.max(0,cards.length-2),Math.round(grid.scrollLeft/step)));
+    return Math.max(0,Math.min(Math.max(0,cards.length-(window.matchMedia('(max-width:760px)').matches?1:2)),Math.round(grid.scrollLeft/step)));
   }
   function updateCarouselPosition(){
     const grid=$('#projectGrid'), cards=carouselCards();
@@ -153,16 +153,16 @@
     }
     const index=carouselIndex(grid,cards);
     grid.dataset.position=String(index);
-    const end=Math.min(cards.length,index+2);
+    
     if(counter)counter.textContent=String(index+1).padStart(2,'0')+'/'+String(cards.length).padStart(2,'0');
     if(prev)prev.disabled=index<=0;
-    if(next)next.disabled=index>=Math.max(0,cards.length-2);
+    if(next)next.disabled=index>=Math.max(0,cards.length-(window.matchMedia('(max-width:760px)').matches?1:2));
   }
   function moveCarousel(direction){
     const grid=$('#projectGrid'),cards=carouselCards();
     if(!grid||!cards.length)return;
     const current=carouselIndex(grid,cards);
-    const maxStart=Math.max(0,cards.length-2);
+    const maxStart=Math.max(0,cards.length-(window.matchMedia('(max-width:760px)').matches?1:2));
     const target=Math.max(0,Math.min(maxStart,current+direction));
     const desired=target*carouselStep(cards);
     grid.dataset.position=String(target);
