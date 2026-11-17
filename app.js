@@ -16,7 +16,7 @@
       introTag:'LET ME INTRODUCE MYSELF',heroIntro:'I make',heroAccent:'ideas',heroEnd:'look impossible to ignore.',
       heroNote:'GRAPHIC DESIGN, BRANDING<br>& A LITTLE BIT OF MAGIC.',explore:'EXPLORE',
       selectedProjects:'SELECTED PROJECTS',workTitle:'Selected <i>work<span class="work-asterisk">*</span></i>',
-      workSubtitle:"A collection of things I've made, imagined, shaped, and occasionally obsessed over.",
+      workSubtitle:"A collection of things I've made, imagined and shaped.",
       behanceMore:'LET’S CREATE SOMETHING ↗',aboutTag:'THE HUMAN BEHIND THE PIXELS',
       aboutTitleOne:'Not just',aboutTitleTwo:'pretty',aboutTitleThree:'pictures.',
       aboutLead:"I'm Sofiia, a graphic designer who loves turning complex ideas into bold, meaningful visual worlds.",
@@ -25,7 +25,7 @@
       contactTag:"LET'S MAKE SOMETHING",contactTitleOne:'GOT A',contactTitleTwo:'wild',contactTitleThree:'IDEA?',
       contactText:"Let's make it real. A good project usually starts with a simple hello.",sayHello:'SAY HELLO',
       projectIndex:'PROJECT',caseAbout:'The idea behind it.',viewBehance:'EXPLORE FULL CASE ON BEHANCE',nextProject:'NEXT PROJECT',back:'← BACK TO PORTFOLIO',
-      journeyNumber:"MY JOURNEY / 2024—2026",
+      journeyNumber:"MY JOURNEY / EXPERIENCE",
       journeyTitle:"Experience<span class=\"resume-spark\">✳</span>",
       journeyIntro:"I have worked with a design studio, a retail marketing team, an advertising agency and a coffee shop. Each setting shaped how I approach visual communication.",
       experienceHeading:"WORK EXPERIENCE",
@@ -56,7 +56,7 @@
       introTag:'НУ ЩО, ЗНАЙОМИТИСЬ?',heroIntro:'Перетворюю',heroAccent:'ідеї',heroEnd:'на візуал, який помічають.',
       heroNote:'ГРАФІЧНИЙ ДИЗАЙН, АЙДЕНТИКА<br>І ТРІШКИ МАГІЇ.',explore:'ДИВИТИСЬ',
       selectedProjects:'ОБРАНІ ПРОЄКТИ',workTitle:'Мої <i>роботи<span class="work-asterisk">*</span></i>',
-      workSubtitle:'Колекція речей, які я придумувала, створювала та іноді надто ретельно доводила до ідеалу.',
+      workSubtitle:'Колекція речей, які я придумувала, створювала та доводила до ідеалу.',
       behanceMore:'СТВОРИМО ЩОСЬ РАЗОМ ↗',aboutTag:'ЛЮДИНА ЗА ПІКСЕЛЯМИ',
       aboutTitleOne:'Не просто',aboutTitleTwo:'гарні',aboutTitleThree:'картинки.',
       aboutLead:'Я Софія, графічна дизайнерка, яка любить перетворювати складні ідеї на сміливі візуальні світи.',
@@ -65,7 +65,7 @@
       contactTag:'СТВОРИМО ЩОСЬ РАЗОМ',contactTitleOne:'МАЄШ',contactTitleTwo:'сміливу',contactTitleThree:'ІДЕЮ?',
       contactText:'Давай втілимо її в життя. Класний проєкт часто починається з простого «привіт».',sayHello:'НАПИСАТИ',
       projectIndex:'ПРОЄКТ',caseAbout:'Ідея за проєктом.',viewBehance:'ПЕРЕГЛЯНУТИ КЕЙС НА BEHANCE',nextProject:'НАСТУПНИЙ ПРОЄКТ',back:'← НАЗАД ДО ПОРТФОЛІО',
-      journeyNumber:"МІЙ ШЛЯХ / 2024—2026",
+      journeyNumber:"МІЙ ШЛЯХ / ДОСВІД",
       journeyTitle:"Досвід<span class=\"resume-spark\">✳</span>",
       journeyIntro:"Працювала в дизайн-студії, маркетинговій команді рітейл-мережі, рекламній агенції та кавʼярні. Різні формати роботи допомогли сформувати системний підхід до візуальної комунікації.",
       experienceHeading:"ДОСВІД РОБОТИ",
@@ -127,7 +127,7 @@
     const grid = $('#projectGrid');
     if (!grid) return;
     grid.innerHTML = projects.map((p, i) => `<article class="project-card" data-category="${escapeHtml(p.category)}"><a href="?case=${encodeURIComponent(p.slug)}" class="project-open" data-slug="${escapeHtml(p.slug)}" aria-label="Open ${escapeHtml(p.title)} case study">
-      ${coverHTML(p)}<div class="project-info"><div><h3>${escapeHtml(p.title)}</h3></div><span class="project-year">${String(i + 1).padStart(2, '0')} / ${escapeHtml(p.year)}</span></div></a></article>`).join('');
+      ${coverHTML(p)}<div class="project-info"><div><h3>${escapeHtml(p.title)}</h3></div><span class="project-year">${String(i + 1).padStart(2, '0')}</span></div></a></article>`).join('');
     const active = document.querySelector('.filter.active')?.dataset.filter || 'all';
     filterProjects(active);
   }
@@ -185,7 +185,7 @@
       <header class="case-topbar"><a class="brand" href="${location.pathname||'./'}" data-action="back">SK<span class="brand-spark">✳</span></a><span class="case-topbar-label mono">${caseTitle} / ${labels.source}</span><div class="case-topbar-buttons"><button class="case-lang" data-action="case-language">${localized?'EN':'UA'} ↗</button><button class="case-back" data-action="back">← ${labels.back}</button></div></header>
       <main class="original-case-main">${original}</main>
       <button class="next-project" data-next="${escapeHtml(next.slug)}"><div><span class="mono">${labels.next} / ${String((idx+1)%projects.length+1).padStart(2,'0')}</span><h2>${escapeHtml(next.title)}</h2></div><span class="next-arrow">↗</span></button>
-      <footer class="case-footer"><span>© SOFIIA KOZACHENKO 2026</span><button data-action="back">← ${labels.back}</button><span>DESIGNED WITH CURIOSITY ✳</span></footer>
+      <footer class="case-footer"><span>© SOFIIA KOZACHENKO</span><button data-action="back">← ${labels.back}</button><span>DESIGNED WITH CURIOSITY ✳</span></footer>
     </div>`;
     root.hidden=false;document.body.style.overflow='hidden';root.scrollTop=0;
     document.title=`${p.title} — Sofiia Kozachenko`;
