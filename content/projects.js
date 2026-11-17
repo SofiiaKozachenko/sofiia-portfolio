@@ -2,7 +2,7 @@
 // The images are Behance-hosted preview thumbnails, not final hi-res presentation files.
 window.PORTFOLIO_PROJECTS = [
   {
-    slug: 'exowave', title: 'ExoWave', subtitle: 'Cosmetology brand', category: 'branding', type: 'BRAND IDENTITY', year: '2026',
+    slug: 'exowave', title: 'ExoWave', subtitle: 'Cosmetology brand', category: 'branding', type: 'BRAND IDENTITY', year: '',
     palette: 'violet', featured: true, short: 'A distinctive visual world for a contemporary cosmetology brand.',
     shortUa: 'Виразна візуальна система для сучасного косметологічного бренду.',
     description: 'A science-inspired brand identity balancing the clarity of a minimal visual system with an expressive purple palette and sophisticated details.',
@@ -11,7 +11,7 @@ window.PORTFOLIO_PROJECTS = [
     behance: 'https://www.behance.net/gallery/257379719/ExoWave-Cosmetology-brand'
   },
   {
-    slug: 'lumus', title: 'LUMUS', subtitle: 'Designer eyewear', category: 'branding', type: 'VISUAL IDENTITY', year: '2026',
+    slug: 'lumus', title: 'LUMUS', subtitle: 'Designer eyewear', category: 'branding', type: 'VISUAL IDENTITY', year: '',
     palette: 'peach', short: 'Clear vision meets expressive, organic branding.',
     shortUa: 'Чітке бачення в поєднанні з органічною візуальною мовою.',
     description: 'A visual identity for a designer eyewear label, built around the harmony between the human experience and modern design. Organic shapes and soft lines form a confident visual language.',
@@ -20,7 +20,7 @@ window.PORTFOLIO_PROJECTS = [
     behance: 'https://www.behance.net/gallery/250232993/LUMUS-Designer-eyewear-brand'
   },
   {
-    slug: 'woody-the-wizard', title: 'Woody the Wizard', subtitle: 'Energy drink concept', category: 'packaging', type: 'PACKAGING / BRANDING', year: '2025',
+    slug: 'woody-the-wizard', title: 'Woody the Wizard', subtitle: 'Energy drink concept', category: 'packaging', type: 'PACKAGING / BRANDING', year: '',
     palette: 'lime', short: 'A little magic in every can.', shortUa: 'Трішки магії в кожній банці.',
     description: 'A character-driven energy drink concept with a playful story of a wizard, his experiments and a magical drink for energy and focus.',
     descriptionUa: 'Концепція енергетичного напою з яскравим персонажем і грайливою історією про чарівника, його експерименти та магічний напій для енергії й концентрації.',
@@ -28,7 +28,7 @@ window.PORTFOLIO_PROJECTS = [
     behance: 'https://www.behance.net/gallery/238164279/Woody-the-Wizard-Energy-Drink-Design'
   },
   {
-    slug: 'bean-road', title: 'Bean Road', subtitle: 'Coffee brand', category: 'branding', type: 'BRANDING / SOCIAL', year: '2025',
+    slug: 'bean-road', title: 'Bean Road', subtitle: 'Coffee brand', category: 'branding', type: 'BRANDING / SOCIAL', year: '',
     palette: 'brown', short: 'Good coffee, good pace, good identity.', shortUa: 'Хороша кава, міський ритм і впізнавана айдентика.',
     description: 'A fresh, urban identity for a coffee shop on wheels. The concept combines a welcoming tone of voice, an expressive mark and versatile communication across touchpoints.',
     descriptionUa: 'Свіжа міська айдентика для мобільної кавʼярні. Концепція поєднує дружній тон комунікації, виразний знак та гнучку систему носіїв.',
@@ -36,7 +36,7 @@ window.PORTFOLIO_PROJECTS = [
     behance: 'https://www.behance.net/gallery/227566159/Coffee-shop-Bean-Road'
   },
   {
-    slug: 'formiture', title: 'Formiture', subtitle: 'Furniture e-commerce', category: 'digital', type: 'UI / UX DESIGN', year: '2024',
+    slug: 'formiture', title: 'Formiture', subtitle: 'Furniture e-commerce', category: 'digital', type: 'UI / UX DESIGN', year: '',
     palette: 'blue', short: 'A thoughtful shopping experience for furniture.', shortUa: 'Продуманий досвід онлайн-покупок меблів.',
     description: 'An e-commerce interface for furniture shopping, exploring navigation, product discovery and a considered digital visual language.',
     descriptionUa: 'Дизайн інтернет-магазину меблів із фокусом на навігації, пошуку товарів і продуманій цифровій візуальній мові.',
