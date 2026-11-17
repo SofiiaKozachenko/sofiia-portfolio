@@ -302,3 +302,52 @@ html[lang="uk"] {
   #projectGrid .project-info h3{font-size:clamp(12px,3.55vw,20px)!important;letter-spacing:-.06em!important;line-height:1.2}
   #projectGrid .project-info .project-year{font-size:8px!important}
 }
+
+
+/* V13 — consistent vectors, circle controls, compact portfolio counter */
+.ui-icon{display:inline-block;width:1em;height:1em;vertical-align:-.12em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.brand-spark .ui-icon,.brand-spark .vector-star{display:block}
+.avatar-sticker .ui-icon{width:18px;height:18px}
+.scribble-arrow .ui-icon{width:1em;height:1em}
+.round-scroll>span .ui-icon{display:block;width:34px;height:34px}
+.experience-item>b .ui-icon{width:20px;height:20px}
+.resume-column-top .vector-star{width:18px;height:18px;vertical-align:middle}
+.edu-seal .vector-star{width:.65em;height:.65em;vertical-align:-.04em}
+.marquee-cycle .vector-star{width:.9em;height:.9em;margin-inline:.18em;vertical-align:-.12em;stroke-width:2.1}
+.case-awaiting-tag .vector-star{width:1em;height:1em;vertical-align:-.13em}
+.case-footer .vector-star,.site-footer .vector-star{width:1em;height:1em;vertical-align:-.15em}
+.case-topbar-buttons .ui-icon,.work-bottom-note .ui-icon,.case-awaiting-actions .ui-icon,.footer-links .ui-icon{width:1em;height:1em;vertical-align:-.16em}
+.mail-button .ui-icon{width:35px;height:35px}
+.next-arrow .ui-icon{width:1em;height:1em}
+.project-carousel-buttons{display:flex;align-items:center;flex-shrink:0!important}
+.project-carousel-buttons button{
+  box-sizing:border-box!important;
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 46px!important;
+  inline-size:46px!important;
+  block-size:46px!important;
+  min-width:46px!important;max-width:46px!important;
+  min-height:46px!important;max-height:46px!important;
+  aspect-ratio:1/1!important;
+  padding:0!important;
+  margin:0!important;
+  line-height:1!important;
+  border-radius:50%!important;
+}
+.project-carousel-buttons button .ui-icon{display:block;width:21px;height:21px}
+.project-carousel-buttons #projectPosition{font-variant-numeric:tabular-nums;white-space:nowrap;min-width:53px!important;max-width:53px!important;text-align:center}
+@media(max-width:760px){
+  .project-carousel-topline>.mono{min-width:0}
+  .project-carousel-buttons{gap:7px!important}
+  .project-carousel-buttons button{
+    flex:0 0 37px!important;
+    inline-size:37px!important;
+    block-size:37px!important;
+    min-width:37px!important;max-width:37px!important;
+    min-height:37px!important;max-height:37px!important;
+    border-radius:50%!important;
+  }
+  .project-carousel-buttons button .ui-icon{width:17px;height:17px}
+  .project-carousel-buttons #projectPosition{flex:0 0 48px!important;min-width:48px!important;max-width:48px!important;font-size:10px!important;letter-spacing:0!important}
+}

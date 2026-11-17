@@ -10,6 +10,9 @@
     violet: ['#7f69c5', '#f1eeff'], peach: ['#d6bdb1', '#593d3c'],
     lime: ['#bde469', '#26350f'], brown: ['#8c634c', '#fbf3e8'], blue: ['#a5beeb', '#1c329e']
   };
+  const uiStar = '<svg class="vector-star" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" aria-hidden="true"><path d="M12 1.6v20.8M1.6 12h20.8M4.7 4.7l14.6 14.6M19.3 4.7L4.7 19.3"/></svg>';
+  const uiUpRight = '<svg class="ui-icon ui-arrow-up-right" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6 M8 6h10v10"/></svg>';
+  const uiLeft = '<svg class="ui-icon ui-arrow-left" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5 M12 5l-7 7 7 7"/></svg>';
   const translations = {
     en: {
       availability:'AVAILABLE FOR PROJECTS',navWork:'WORK <sup>05</sup>',navAbout:'ABOUT',navContact:'CONTACT',
@@ -17,16 +20,16 @@
       heroNote:'GRAPHIC DESIGN, BRANDING<br>& A LITTLE BIT OF MAGIC.',explore:'EXPLORE',
       selectedProjects:'SELECTED PROJECTS',workTitle:'Selected <i>work<span class="work-asterisk">*</span></i>',
       workSubtitle:"A collection of things I've made, imagined and thoughtfully refined.",
-      behanceMore:'LET’S CREATE SOMETHING ↗',aboutTag:'THE HUMAN BEHIND THE PIXELS',
+      behanceMore:'LET’S CREATE SOMETHING ' + uiUpRight,aboutTag:'THE HUMAN BEHIND THE PIXELS',
       aboutTitleOne:'Not just',aboutTitleTwo:'pretty',aboutTitleThree:'pictures.',
       aboutLead:"I'm Sofiia, a graphic designer who loves turning complex ideas into bold, meaningful visual worlds.",
       aboutText:"I work at the intersection of visual identity, brand storytelling, digital design and experimentation. I believe the best design does more than catch the eye — it gives an idea its own voice.",
       factOne:'CREATING VISUAL<br>IDENTITIES',factTwo:'COMPUTER SCIENCE<br>+ DESIGN',factThree:'CURIOUS, STRATEGIC<br>& A BIT BOLD',
       contactTag:"LET'S MAKE SOMETHING",contactTitleOne:'GOT A',contactTitleTwo:'wild',contactTitleThree:'IDEA?',
       contactText:"Let's make it real. A good project usually starts with a simple hello.",sayHello:'SAY HELLO',
-      projectIndex:'PROJECT',caseAbout:'The idea behind it.',viewBehance:'EXPLORE FULL CASE ON BEHANCE',nextProject:'NEXT PROJECT',back:'← BACK TO PORTFOLIO',
+      projectIndex:'PROJECT',caseAbout:'The idea behind it.',viewBehance:'EXPLORE FULL CASE ON BEHANCE',nextProject:'NEXT PROJECT',back:'BACK TO PORTFOLIO',
       journeyNumber:"MY JOURNEY / EXPERIENCE",
-      journeyTitle:"Experience<span class=\"resume-spark\">✳︎</span>",
+      journeyTitle:'Experience<span class="resume-spark">' + uiStar + '</span>',
       journeyIntro:"I have worked with a design studio, a retail marketing team, an advertising agency and a coffee shop. Each setting shaped how I approach visual communication.",
       experienceHeading:"WORK EXPERIENCE",
       roleAxioma:"Graphic designer and SMM designer at Axioma design studio.",
@@ -57,16 +60,16 @@
       heroNote:'ГРАФІЧНИЙ ДИЗАЙН, АЙДЕНТИКА<br>І ТРІШКИ МАГІЇ.',explore:'ДИВИТИСЬ',
       selectedProjects:'ОБРАНІ ПРОЄКТИ',workTitle:'Мої <i>роботи<span class="work-asterisk">*</span></i>',
       workSubtitle:'Колекція речей, які я придумувала, створювала та ретельно доводила до ідеалу.',
-      behanceMore:'СТВОРИМО ЩОСЬ РАЗОМ ↗',aboutTag:'ЛЮДИНА ЗА ПІКСЕЛЯМИ',
+      behanceMore:'СТВОРИМО ЩОСЬ РАЗОМ ' + uiUpRight,aboutTag:'ЛЮДИНА ЗА ПІКСЕЛЯМИ',
       aboutTitleOne:'Не просто',aboutTitleTwo:'гарні',aboutTitleThree:'картинки.',
       aboutLead:'Я Софія, графічна дизайнерка, яка любить перетворювати складні ідеї на сміливі візуальні світи.',
       aboutText:'Працюю з айдентикою, візуальними історіями брендів, цифровим дизайном та експериментами. Вірю, що хороший дизайн не лише привертає увагу, а й дає ідеї власний голос.',
       factOne:'СТВОРЮЮ ВІЗУАЛЬНІ<br>ІДЕНТИЧНОСТІ',factTwo:'КОМПʼЮТЕРНІ НАУКИ<br>+ ДИЗАЙН',factThree:'ДОПИТЛИВА, СТРАТЕГІЧНА<br>І ТРОХИ СМІЛИВА',
       contactTag:'СТВОРИМО ЩОСЬ РАЗОМ',contactTitleOne:'МАЄШ',contactTitleTwo:'сміливу',contactTitleThree:'ІДЕЮ?',
       contactText:'Давай втілимо її в життя. Класний проєкт часто починається з простого «привіт».',sayHello:'НАПИСАТИ',
-      projectIndex:'ПРОЄКТ',caseAbout:'Ідея за проєктом.',viewBehance:'ПЕРЕГЛЯНУТИ КЕЙС НА BEHANCE',nextProject:'НАСТУПНИЙ ПРОЄКТ',back:'← НАЗАД ДО ПОРТФОЛІО',
+      projectIndex:'ПРОЄКТ',caseAbout:'Ідея за проєктом.',viewBehance:'ПЕРЕГЛЯНУТИ КЕЙС НА BEHANCE',nextProject:'НАСТУПНИЙ ПРОЄКТ',back:'НАЗАД ДО ПОРТФОЛІО',
       journeyNumber:"МІЙ ШЛЯХ / ДОСВІД",
-      journeyTitle:"Досвід<span class=\"resume-spark\">✳︎</span>",
+      journeyTitle:'Досвід<span class="resume-spark">' + uiStar + '</span>',
       journeyIntro:"Працювала в дизайн-студії, маркетинговій команді рітейл-мережі, рекламній агенції та кавʼярні. Різні формати роботи допомогли сформувати системний підхід до візуальної комунікації.",
       experienceHeading:"ДОСВІД РОБОТИ",
       roleAxioma:"Графічна дизайнерка та SMM у дизайн-студії Axioma.",
@@ -151,7 +154,7 @@
     const index=carouselIndex(grid,cards);
     grid.dataset.position=String(index);
     const end=Math.min(cards.length,index+2);
-    if(counter)counter.textContent=String(index+1).padStart(2,'0')+'–'+String(end).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
+    if(counter)counter.textContent=String(index+1).padStart(2,'0')+'/'+String(cards.length).padStart(2,'0');
     if(prev)prev.disabled=index<=0;
     if(next)next.disabled=index>=Math.max(0,cards.length-2);
   }
@@ -166,7 +169,7 @@
     grid.scrollTo({left:desired,behavior:'smooth'});
     // Update controls immediately, including after a rapid reverse click.
     const counter=$('#projectPosition');
-    if(counter)counter.textContent=String(target+1).padStart(2,'0')+'–'+String(Math.min(cards.length,target+2)).padStart(2,'0')+' / '+String(cards.length).padStart(2,'0');
+    if(counter)counter.textContent=String(target+1).padStart(2,'0')+'/'+String(cards.length).padStart(2,'0');
     $('#projectPrev').disabled=target===0;
     $('#projectNext').disabled=target===maxStart;
   }
@@ -271,17 +274,17 @@
     } else {
       const cover=exported?.cover||p.image||'';
       original=`<section class="case-awaiting">
-        <div><span class="mono case-awaiting-tag">✳︎ ${labels.source}</span>
+        <div><span class="mono case-awaiting-tag">${uiStar} ${labels.source}</span>
           <h2>${labels.awaiting}</h2><p>${labels.note}</p>
-          <div class="case-awaiting-actions"><a href="${escapeHtml(p.behance||'#')}" target="_blank" rel="noopener noreferrer">${labels.sourceLink} ↗</a></div>
+          <div class="case-awaiting-actions"><a href="${escapeHtml(p.behance||'#')}" target="_blank" rel="noopener noreferrer">${labels.sourceLink} ${uiUpRight}</a></div>
         </div><div class="case-awaiting-visual" style="--await-bg:${(theme[p.palette]||theme.blue)[0]};--await-fg:${(theme[p.palette]||theme.blue)[1]}"><strong>${caseTitle}</strong>${cover?`<img src="${escapeHtml(cover)}" alt="${caseTitle} — original cover" loading="eager" onerror="this.remove()" />`:''}</div></section>`;
     }
     const root=$('#caseView');
     root.innerHTML=`<div class="case-page original-case-page">
-      <header class="case-topbar"><a class="brand" href="${location.pathname||'./'}" data-action="back">SK<span class="brand-spark"><svg class="vector-star" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" aria-hidden="true"><path d="M12 1.6v20.8M1.6 12h20.8M4.7 4.7l14.6 14.6M19.3 4.7L4.7 19.3"/></svg></span></a><span class="case-topbar-label mono">${caseTitle} / ${labels.source}</span><div class="case-topbar-buttons"><button class="case-lang" data-action="case-language">${localized?'EN':'UA'} ↗</button><button class="case-back" data-action="back">← ${labels.back}</button></div></header>
+      <header class="case-topbar"><a class="brand" href="${location.pathname||'./'}" data-action="back">SK<span class="brand-spark"><svg class="vector-star" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" aria-hidden="true"><path d="M12 1.6v20.8M1.6 12h20.8M4.7 4.7l14.6 14.6M19.3 4.7L4.7 19.3"/></svg></span></a><span class="case-topbar-label mono">${caseTitle} / ${labels.source}</span><div class="case-topbar-buttons"><button class="case-lang" data-action="case-language">${localized?'EN':'UA'} ${uiUpRight}</button><button class="case-back" data-action="back">${uiLeft} ${labels.back}</button></div></header>
       <main class="original-case-main">${original}</main>
-      <button class="next-project" data-next="${escapeHtml(next.slug)}"><div><span class="mono">${labels.next} / ${String((idx+1)%projects.length+1).padStart(2,'0')}</span><h2>${escapeHtml(next.title)}</h2></div><span class="next-arrow">↗</span></button>
-      <footer class="case-footer"><span>© SOFIIA KOZACHENKO</span><button data-action="back">← ${labels.back}</button><span>DESIGNED WITH CURIOSITY ✳︎</span></footer>
+      <button class="next-project" data-next="${escapeHtml(next.slug)}"><div><span class="mono">${labels.next} / ${String((idx+1)%projects.length+1).padStart(2,'0')}</span><h2>${escapeHtml(next.title)}</h2></div><span class="next-arrow">${uiUpRight}</span></button>
+      <footer class="case-footer"><span>© SOFIIA KOZACHENKO</span><button data-action="back">${uiLeft} ${labels.back}</button><span>DESIGNED WITH CURIOSITY ${uiStar}</span></footer>
     </div>`;
     root.hidden=false;document.body.style.overflow='hidden';root.scrollTop=0;
     document.title=`${p.title} — Sofiia Kozachenko`;
