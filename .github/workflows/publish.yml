@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -34,11 +35,40 @@ jobs:
       - name: Install importer
         run: python -m pip install -r requirements-sync.txt
       - name: Download originals, create high-quality responsive gallery assets, and verify
+        id: sync
+        continue-on-error: true
         run: python scripts/build_site.py --discover
       - name: Verify deploy is nonempty and offline-capable
+        if: steps.sync.outcome == 'success'
         run: python scripts/build_site.py --check-only
       - name: Prepare static production folder
+        if: steps.sync.outcome == 'success'
         run: python scripts/stage_site.py
+      - name: Reuse last successful case archive when Behance is unavailable
+        if: steps.sync.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          # Keep all original images, optimized assets, and Vimeo content intact.
+          previous_run="$(gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts?per_page=100&name=github-pages" --jq '[.artifacts[] | select(.expired == false)] | sort_by(.created_at) | last | .workflow_run.id')"
+          if [[ -z "$previous_run" || "$previous_run" == "null" ]]; then
+            echo "::error::No previous published gallery archive; keep the existing live site unchanged."
+            exit 1
+          fi
+          mkdir -p /tmp/previous-pages dist
+          gh run download "$previous_run" --repo "$GITHUB_REPOSITORY" --name github-pages --dir /tmp/previous-pages
+          test -s /tmp/previous-pages/artifact.tar
+          tar -xf /tmp/previous-pages/artifact.tar -C dist
+          # Overlay only the new interface, preserving all previous case assets.
+          cp -f index.html styles.css app.js dist/
+          test -s dist/content/case-pages.js
+          test -s dist/content/behance-imports.js
+          test -s dist/assets/favicon.svg
+          grep -q 'player.vimeo.com/video/1090989010' dist/content/case-pages.js
+          grep -q 'app.js?v=22' dist/index.html
+          echo "Recovered previous galleries from run $previous_run; deploying updated interface."
+
       - name: Prepare GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload complete static site
