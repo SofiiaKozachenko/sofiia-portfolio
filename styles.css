@@ -646,3 +646,24 @@ html[lang="uk"] {
     -webkit-tap-highlight-color:transparent!important;
   }
 }
+
+
+/* V23: semi-transparent circular Say Hello halo on phones.
+   Draw the halo as a round border, not Safari's rectangular tap highlight. */
+@media (max-width:760px){
+  .contact-section .mail-button{
+    border-radius:50%!important;
+    overflow:visible;
+    box-shadow:none!important;
+    -webkit-tap-highlight-color:transparent!important;
+  }
+  .contact-section .mail-button::after{
+    content:"";
+    position:absolute;
+    inset:-8px;
+    border:8px solid rgba(179,210,109,.26);
+    border-radius:50%;
+    box-sizing:border-box;
+    pointer-events:none;
+  }
+}
