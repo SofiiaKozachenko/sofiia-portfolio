@@ -546,3 +546,12 @@ html[lang="uk"] {
 @media(max-width:760px){
   .avatar-sticker{background:var(--lime)!important;}
 }
+
+
+/* V20: visible lime accent, with cache-busted stylesheet on deployment */
+.round-scroll{background:var(--lime)!important;border-color:var(--blue)!important;color:var(--blue)!important}
+.round-scroll:hover{background:var(--blue)!important;color:var(--paper)!important}
+@media(max-width:760px){
+  .hero-lower .round-scroll{background:var(--lime)!important}
+  .avatar-sticker{background-color:var(--lime)!important}
+}
