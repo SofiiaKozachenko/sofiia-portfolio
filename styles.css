@@ -480,3 +480,42 @@ html[lang="uk"] {
     font-size:10px!important;
   }
 }
+
+
+/* V17: favicon & avatar original proportions */
+/* Keep the improved character artwork; restore a more modest scale within the composition. */
+@media (min-width:761px) {
+  .hero-art .hero-avatar{
+    width:88%!important;
+    height:105%!important;
+    inset:-3% auto auto 6%!important;
+    transform:rotate(-2deg)!important;
+  }
+}
+@media (max-width:760px) {
+  .hero-art .hero-avatar {
+    width:87%!important;
+    height:100%!important;
+    inset:0 auto auto 6.5%!important;
+    transform:rotate(-2deg)!important;
+  }
+}
+/* Head inside oval in the About section should not fill the entire shape. */
+.about-section .about-main .about-side .tiny-avatar img{
+  width:80%!important;
+  height:80%!important;
+  left:10%!important;
+  bottom:4%!important;
+  top:auto!important;
+  transform:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+}
+@media(max-width:760px){
+  .about-section .about-main .about-side .tiny-avatar img{
+    width:80%!important;
+    height:80%!important;
+    left:10%!important;
+    bottom:4%!important;
+  }
+}

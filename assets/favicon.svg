@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#191c9c"/><path d="M13 16h17v7H21v9h9v7h-9v9h-8zm22 0h8v13l10-13h9L49 33l13 15H52L43 37v11h-8z" fill="#f5f1e8"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="SK*">
+  <rect width="64" height="64" rx="13" fill="#191c9c"/>
+  <text x="5" y="45" font-family="Arial, Helvetica, sans-serif" font-size="33" font-weight="900" letter-spacing="-2.6" fill="#f5f1e8">SK</text>
+  <g stroke="#eab1c4" stroke-width="3.1" stroke-linecap="round">
+    <path d="M54 9v17M45.5 17.5h17M48 11.5l12 12M60 11.5l-12 12"/>
+  </g>
+</svg>

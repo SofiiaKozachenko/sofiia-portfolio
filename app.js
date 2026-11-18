@@ -303,7 +303,7 @@
       <footer class="case-footer"><span>© SOFIIA KOZACHENKO</span><button data-action="back">${uiLeft} ${labels.back}</button><span>DESIGNED WITH CURIOSITY ${uiStar}</span></footer>
     </div>`;
     root.hidden=false;document.body.style.overflow='hidden';root.scrollTop=0;
-    document.title=`${p.title} — Sofiia Kozachenko`;
+    document.title='Sofiia Kozachenko';
     $('#mainShell').setAttribute('aria-hidden','true');
     // Responsive images use native lazy loading.
     // Initiate the Vimeo player as it enters the visible part of the case study.
@@ -342,7 +342,7 @@
     root.hidden = true;
     root.innerHTML = '';
     document.body.style.overflow = '';
-    document.title = 'Sofiia Kozachenko® — Independent Graphic Designer';
+    document.title = 'Sofiia Kozachenko';
     $('#mainShell').removeAttribute('aria-hidden');
     window.scrollTo(0, returnScroll);
   }
