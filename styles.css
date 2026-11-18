@@ -519,3 +519,11 @@ html[lang="uk"] {
     bottom:4%!important;
   }
 }
+
+/* V18: lift the Explore button on phones without affecting desktop layout */
+@media (max-width:760px){
+  .hero-lower .round-scroll{transform:translateY(-48px)!important;}
+}
+@media (max-width:400px){
+  .hero-lower .round-scroll{transform:translateY(-40px)!important;}
+}
