@@ -527,3 +527,22 @@ html[lang="uk"] {
 @media (max-width:400px){
   .hero-lower .round-scroll{transform:translateY(-40px)!important;}
 }
+
+
+/* V19: lime accents in the first screen — keep blue and pink dominant */
+.avatar-sticker{
+  background:var(--lime)!important;
+  color:var(--blue)!important;
+  border-color:var(--blue)!important;
+}
+.brand-spark .vector-star,
+.hero-asterisk .vector-star{
+  color:#86a629!important;
+}
+.status-dot{
+  background:var(--lime)!important;
+  box-shadow:0 0 0 3px rgba(201,233,121,.3),inset 0 0 0 1px rgba(25,28,156,.14)!important;
+}
+@media(max-width:760px){
+  .avatar-sticker{background:var(--lime)!important;}
+}
