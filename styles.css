@@ -741,3 +741,16 @@ html[lang="uk"] {
   transform:none!important;
   filter:none!important;
 }
+
+
+/* V26 — identical uploaded character, opposing viewing directions. */
+/* The original file is not edited. The hero keeps the left-facing image. */
+.hero-art .hero-avatar{
+  transform:scaleX(1)!important;
+  transform-origin:center center!important;
+}
+/* In the About oval, mirror only the displayed image to face right. */
+.about-section .about-main .about-side .tiny-avatar img{
+  transform:scaleX(-1)!important;
+  transform-origin:center center!important;
+}
