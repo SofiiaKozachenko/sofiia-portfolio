@@ -617,3 +617,32 @@ html[lang="uk"] {
   .about-section .about-tags span:nth-child(2){background:rgba(201,233,121,.45);}
   .original-case-page .case-topbar .case-lang{background:rgba(201,233,121,.42);}
 }
+
+
+/* V22: correct carousel clicks and remove square iOS touch shadow */
+#projectGrid .project-open{
+  display:block;
+  position:relative;
+  cursor:pointer;
+}
+@media(max-width:760px){
+  .contact-section .mail-button,
+  .contact-section .mail-button:active,
+  .contact-section .mail-button:focus,
+  .contact-section .mail-button:hover{
+    -webkit-tap-highlight-color:transparent!important;
+    -webkit-appearance:none;
+    appearance:none;
+    box-shadow:none!important;
+    filter:none!important;
+    border-radius:50%!important;
+    outline:none;
+  }
+  .contact-section .mail-button:focus-visible{
+    outline:2px solid var(--paper)!important;
+    outline-offset:5px;
+  }
+  .contact-section .mail-button *{
+    -webkit-tap-highlight-color:transparent!important;
+  }
+}

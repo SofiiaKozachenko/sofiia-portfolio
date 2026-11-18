@@ -219,38 +219,51 @@
     });
   }
 
-  // Scroll the horizontal gallery with a mouse as well as touch, arrows, keyboard.
+  // Keep links clickable. Capture the mouse pointer ONLY after an actual drag
+  // (capturing at pointerdown causes browser clicks to target the gallery).
+  // Touch devices use the native horizontal swipe/scroll behavior.
   const dragGrid=$('#projectGrid');
   let dragState=null;
   let suppressProjectClick=false;
-  dragGrid.addEventListener('pointerdown',e=>{
-    if(e.pointerType!=='mouse'||e.button!==0)return;
-    dragState={x:e.clientX,left:dragGrid.scrollLeft,moved:false};
-    dragGrid.style.scrollSnapType='none';
-    dragGrid.style.scrollBehavior='auto';
-    dragGrid.setPointerCapture(e.pointerId);
+  dragGrid.addEventListener('pointerdown',event=>{
+    if(event.pointerType!=='mouse'||event.button!==0||event.target.closest('button'))return;
+    dragState={id:event.pointerId,x:event.clientX,left:dragGrid.scrollLeft,moved:false};
   });
-  dragGrid.addEventListener('pointermove',e=>{
-    if(!dragState)return;
-    const delta=e.clientX-dragState.x;
-    if(Math.abs(delta)>7)dragState.moved=true;
+  dragGrid.addEventListener('pointermove',event=>{
+    if(!dragState||event.pointerId!==dragState.id)return;
+    const delta=event.clientX-dragState.x;
+    if(!dragState.moved && Math.abs(delta)>9){
+      dragState.moved=true;
+      dragGrid.style.scrollSnapType='none';
+      dragGrid.style.scrollBehavior='auto';
+      try{dragGrid.setPointerCapture(event.pointerId);}catch{}
+    }
     if(dragState.moved)dragGrid.scrollLeft=dragState.left-delta;
   });
-  function stopGalleryDrag(){
-    if(!dragState)return;
-    const wasMoved=dragState.moved;
+  function stopGalleryDrag(event){
+    if(!dragState || (event && event.pointerId!==dragState.id))return;
+    const moved=dragState.moved;
+    const id=dragState.id;
     dragState=null;
     dragGrid.style.scrollSnapType='';
     dragGrid.style.scrollBehavior='';
-    if(wasMoved){
+    if(dragGrid.hasPointerCapture?.(id)){
+      try{dragGrid.releasePointerCapture(id);}catch{}
+    }
+    if(moved){
       suppressProjectClick=true;
-      setTimeout(()=>{suppressProjectClick=false;},50);
+      setTimeout(()=>{suppressProjectClick=false;},100);
     }
   }
   dragGrid.addEventListener('pointerup',stopGalleryDrag);
   dragGrid.addEventListener('pointercancel',stopGalleryDrag);
-  dragGrid.addEventListener('click',e=>{
-    if(suppressProjectClick){e.preventDefault();e.stopImmediatePropagation();suppressProjectClick=false;}
+  dragGrid.addEventListener('lostpointercapture',stopGalleryDrag);
+  dragGrid.addEventListener('click',event=>{
+    if(suppressProjectClick){
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      suppressProjectClick=false;
+    }
   },true);
 
   let returnScroll = 0;
