@@ -555,3 +555,65 @@ html[lang="uk"] {
   .hero-lower .round-scroll{background:var(--lime)!important}
   .avatar-sticker{background-color:var(--lime)!important}
 }
+
+
+/* V21 — lime + dusty-pink micro-accents on home and case page chrome.
+   The Behance case galleries remain fully untouched. */
+/* Original Explore / «Дивись» paper background, restored on both layouts. */
+.round-scroll,
+.hero-lower .round-scroll{
+  background:var(--paper)!important;
+  border-color:var(--blue)!important;
+  color:var(--blue)!important;
+}
+.round-scroll:hover,
+.hero-lower .round-scroll:hover{
+  background:var(--blue)!important;
+  color:var(--paper)!important;
+}
+/* Personal/about section: restrained pastel chips and two ornamental marks. */
+.about-section .about-tags span:nth-child(2){
+  background:rgba(201,233,121,.42);
+  border-color:rgba(113,142,47,.5);
+}
+.about-section .about-tags span:nth-child(4){
+  background:rgba(209,162,178,.31);
+  border-color:rgba(163,77,101,.38);
+}
+.about-section .resume-spark .vector-star{
+  color:#7d9b28;
+}
+.about-section .resume-column-top .vector-star,
+.about-section .edu-seal .vector-star{
+  color:#ac5877;
+}
+/* Portfolio section: tiny colored accents only; covers are unchanged. */
+.work-section .work-asterisk{color:#aa5375;}
+.work-section .project-carousel-topline .vector-star{color:#829f30;}
+.work-section .project-info .project-year{color:#a35473;}
+.work-section .project-carousel-buttons button:hover:not(:disabled){
+  background:var(--lime);
+  color:var(--blue);
+  border-color:var(--blue);
+}
+/* Inside each case page: color the interface, never the imported imagery. */
+.original-case-page .case-topbar .brand-spark .vector-star{
+  color:#7e9a2a!important;
+}
+.original-case-page .case-topbar .case-lang{
+  background:rgba(201,233,121,.42);
+  border-color:rgba(113,142,47,.48);
+  color:var(--blue);
+}
+.original-case-page .case-topbar .case-lang:hover{
+  background:var(--lime);
+}
+.original-case-page .next-project .mono{color:#a45274;}
+.original-case-page .next-project .next-arrow{color:#a45274;}
+.original-case-page .next-project:hover .next-arrow{color:var(--blue);}
+.original-case-page .case-footer .vector-star{color:var(--lime);}
+@media(max-width:760px){
+  .hero-lower .round-scroll{background:var(--paper)!important;}
+  .about-section .about-tags span:nth-child(2){background:rgba(201,233,121,.45);}
+  .original-case-page .case-topbar .case-lang{background:rgba(201,233,121,.42);}
+}
