@@ -667,3 +667,77 @@ html[lang="uk"] {
     pointer-events:none;
   }
 }
+
+
+/* V25: New original character. The image pixels are unchanged; display-only framing. */
+.hero-art .hero-avatar {
+  display:block!important;
+  position:absolute!important;
+  width:100%!important;
+  height:100%!important;
+  inset:0!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:none!important;
+  filter:drop-shadow(8px 14px 10px rgba(30,28,65,.14))!important;
+}
+@media (min-width:761px) {
+  .hero-art {
+    width:clamp(340px,38vw,550px)!important;
+    height:clamp(540px,63vh,720px)!important;
+    right:clamp(20px,7vw,140px)!important;
+    top:auto!important;
+    bottom:16px!important;
+  }
+  .hero-art .hero-art-shape{
+    inset:12% 18% 27% 18%!important;
+    transform:rotate(-9deg);
+  }
+}
+@media (max-width:760px) {
+  .hero-art {
+    width:min(77vw,330px)!important;
+    height:clamp(370px,106vw,515px)!important;
+    top:auto!important;
+    right:auto!important;
+    left:auto!important;
+    bottom:auto!important;
+    margin:4px auto 8px!important;
+  }
+  .hero-art .hero-avatar {
+    width:100%!important;
+    height:100%!important;
+    inset:0!important;
+  }
+  .hero-art .hero-art-shape{
+    inset:10% 19% 26% 19%!important;
+    transform:rotate(-9deg);
+  }
+  .hero-art .avatar-sticker{
+    right:-3%!important;
+    top:17%!important;
+  }
+}
+/* Portrait window: show only the head and shoulders by clipping the SAME image. */
+.about-section .about-main .about-side .tiny-avatar {
+  overflow:hidden!important;
+}
+.about-section .about-main .about-side .tiny-avatar img {
+  display:block!important;
+  position:absolute!important;
+  width:116%!important;
+  height:auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  max-height:none!important;
+  top:4%!important;
+  bottom:auto!important;
+  left:-8%!important;
+  right:auto!important;
+  object-fit:unset!important;
+  object-position:center top!important;
+  transform:none!important;
+  filter:none!important;
+}
