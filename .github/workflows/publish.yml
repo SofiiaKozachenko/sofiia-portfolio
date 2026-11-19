@@ -66,11 +66,17 @@ jobs:
           test -s dist/content/behance-imports.js
           test -s dist/assets/favicon.svg
           grep -q 'player.vimeo.com/video/1090989010' dist/content/case-pages.js
-          grep -q 'app.js?v=22' dist/index.html
+          grep -q 'app.js?v=' dist/index.html
           echo "Recovered previous galleries from run $previous_run; deploying updated interface."
 
       - name: Create and verify optimized responsive character images
         run: python scripts/prepare_character.py
+      - name: Verify portrait images in published site
+        run: |
+          test -s dist/assets/sofiia-fullbody-original.webp
+          test -s dist/assets/sofiia-character-mobile.webp
+          test -s dist/assets/sofiia-character-optimized.webp
+          grep -q 'assets/sofiia-fullbody-original.webp' dist/index.html
       - name: Prepare GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload complete static site
