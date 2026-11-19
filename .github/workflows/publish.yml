@@ -69,7 +69,7 @@ jobs:
           grep -q 'app.js?v=22' dist/index.html
           echo "Recovered previous galleries from run $previous_run; deploying updated interface."
 
-      - name: Verify and publish original-pixel character PNG
+      - name: Create and verify optimized responsive character images
         run: python scripts/prepare_character.py
       - name: Prepare GitHub Pages
         uses: actions/configure-pages@v5
