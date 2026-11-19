@@ -56,7 +56,7 @@
     },
     ua: {
       availability:'ВІДКРИТА ДО ПРОЄКТІВ',navWork:'ПРОЄКТИ <sup>05</sup>',navAbout:'ПРО МЕНЕ',navContact:'КОНТАКТИ',
-      introTag:'НУ ЩО, ЗНАЙОМИТИСЬ?',heroIntro:'Перетворюю',heroAccent:'ідеї',heroEnd:'на візуал, який помічають.',
+      introTag:'ну що, познайомимось?',heroIntro:'Перетворюю',heroAccent:'ідеї',heroEnd:'на візуал, який помічають.',
       heroNote:'ГРАФІЧНИЙ ДИЗАЙН, АЙДЕНТИКА<br>І ТРІШКИ МАГІЇ.',explore:'ДИВИТИСЬ',
       selectedProjects:'ОБРАНІ ПРОЄКТИ',workTitle:'Добірка <i>проєктів<span class="work-asterisk">*</span></i>',
       workSubtitle:'Колекція речей, які я придумувала, створювала та ретельно доводила до ідеалу.',

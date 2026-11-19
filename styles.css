@@ -754,3 +754,18 @@ html[lang="uk"] {
   transform:scaleX(-1)!important;
   transform-origin:center center!important;
 }
+
+
+/* V28: clean unshadowed oval portrait only. Original image stays unchanged. */
+.about-section .about-main .about-side .tiny-avatar,
+.about-section .about-main .about-side .tiny-avatar::before,
+.about-section .about-main .about-side .tiny-avatar::after,
+.about-section .about-main .about-side .tiny-avatar img{
+  box-shadow:none!important;
+  filter:none!important;
+  text-shadow:none!important;
+}
+.about-section .about-main .about-side .tiny-avatar img{
+  -webkit-filter:none!important;
+  mix-blend-mode:normal!important;
+}
