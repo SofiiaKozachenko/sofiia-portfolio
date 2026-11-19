@@ -10,7 +10,7 @@ def main():
     dist=ROOT/'dist'
     if dist.exists():shutil.rmtree(dist)
     dist.mkdir()
-    for filename in ('index.html','styles.css','app.js','.nojekyll'):
+    for filename in ('index.html','styles.css','app.js','sitemap.xml','.nojekyll'):
         shutil.copy2(ROOT/filename,dist/filename)
     for d in ('assets','content'):
         shutil.copytree(ROOT/d,dist/d,ignore=shutil.ignore_patterns('*.json','*.tmp','*.previous','*.pyc','__pycache__'))
