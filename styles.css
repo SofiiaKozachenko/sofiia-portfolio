@@ -769,3 +769,10 @@ html[lang="uk"] {
   -webkit-filter:none!important;
   mix-blend-mode:normal!important;
 }
+
+
+/* V29: remove high-contrast blue outline from the pink About portrait oval. */
+.about-section .about-main .about-side .tiny-avatar{
+  border:none!important;
+  outline:none!important;
+}
